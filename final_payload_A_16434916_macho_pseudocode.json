@@ -1,0 +1,2618 @@
+{
+  "source": "final_payload_A_16434916_macho.bin",
+  "total_functions": 167,
+  "decompiled": 165,
+  "failed": 2,
+  "hexrays_available": true,
+  "error_summary": {
+    "decompile() returned None": 2
+  },
+  "functions": [
+    {
+      "address": "0x5CEC",
+      "name": "sub_5CEC",
+      "size": 64,
+      "calls": [
+        "sub_7BC0",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x6C80 (sub_6C44)",
+        "0x6D40 (sub_6C44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "bool sub_5CEC()\n{\n  return (unsigned int)sub_7BC0() != 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x5D2C",
+      "name": "sub_5D2C",
+      "size": 60,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x5D28 (sub_5CEC)",
+        "0x6C04 (_process)",
+        "0x72A8 (sub_71FC)",
+        "0x72C0 (sub_71FC)",
+        "0x72D8 (sub_71FC)",
+        "0x72F0 (sub_71FC)",
+        "0x7460 (sub_71FC)",
+        "0x7478 (sub_71FC)",
+        "0x7548 (sub_7524)",
+        "0x7658 (sub_7638)",
+        "0x77E0 (sub_7720)",
+        "0x7800 (sub_7720)",
+        "0x8710 (sub_8590)",
+        "0x8720 (sub_8590)",
+        "0x8730 (sub_8590)",
+        "0x8740 (sub_8590)",
+        "0x8750 (sub_8590)",
+        "0x8760 (sub_8590)",
+        "0x8770 (sub_8590)",
+        "0x8780 (sub_8590)"
+      ],
+      "string_refs": [],
+      "pseudocode": "void sub_5D2C()\n{\n  ;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x5D68",
+      "name": "sub_5D68",
+      "size": 96,
+      "calls": [
+        "sub_7BC0",
+        "sub_7BA0",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x5D64 (sub_5D2C)",
+        "0x6C94 (sub_6C44)",
+        "0x7058 (sub_6FEC)",
+        "0x9028 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_5D68(__int64 a1, __int64 a2)\n{\n  if ( (unsigned int)sub_7BC0() )\n    return sub_7BA0(a1, a2);\n  return a1;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x5DC8",
+      "name": "sub_5DC8",
+      "size": 176,
+      "calls": [
+        "_sys_dcache_flush",
+        "_sys_icache_invalidate",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x5DC4 (sub_5D68)",
+        "0x82C4 (sub_8298)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_5DC8(__int64 result, __int64 a2, unsigned int a3)\n{\n  unsigned int v3; // w19\n  __int64 v4; // x20\n  unsigned int v5; // w23\n  unsigned int v6; // w8\n  unsigned int v7; // w25\n  __int64 v8; // x21\n\n  if ( !a2 || (v3 = a3, v4 = a2, !a3) )\n  {\n    v3 = *(_DWORD *)(result + 144);\n    if ( !v3 )\n      return result;\n    v4 = *(_QWORD *)(result + 136);\n  }\n  v5 = 0;\n  v6 = v3;\n  do\n  {\n    v7 = v6 - 327680;\n    if ( v6 >= 0x50000 )\n      v8 = 327680;\n    else\n      v8 = v6;\n    sys_dcache_flush(v4 + v5, v8);\n    result = sys_icache_invalidate(v4 + v5, v8);\n    v5 += 327680;\n    v6 = v7;\n  }\n  while ( v3 > v5 );\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x5E78",
+      "name": "sub_5E78",
+      "size": 212,
+      "calls": [
+        "_bzero",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x5E74 (sub_5DC8)",
+        "0x6750 (sub_5FEC)",
+        "0x8420 (sub_8298)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_5E78(__int64 a1, unsigned int a2)\n{\n  __int64 v3; // x8\n  unsigned int *v4; // x10\n  __int64 v5; // x9\n  unsigned int v6; // w11\n  unsigned int v7; // w12\n  unsigned int v8; // w13\n  void *v9; // x0\n\n  v3 = *(unsigned int *)(a1 + 144);\n  v4 = *(unsigned int **)(a1 + 312);\n  v5 = *(_QWORD *)(a1 + 136) + v3;\n  if ( !v4 )\n    v4 = (unsigned int *)(v5 - 4);\nLABEL_3:\n  v6 = atomic_load(v4);\n  v7 = v6 + a2 + 4 * (v6 == 0);\n  if ( v7 > (unsigned int)v3 )\n    return 49155;\n  do\n  {\n    v8 = __ldaxr(v4);\n    if ( v8 != v6 )\n    {\n      __clrex();\n      goto LABEL_3;\n    }\n  }\n  while ( __stlxr(v7, v4) );\n  v9 = (void *)(v5 - v7);\n  *(_QWORD *)(a1 + 72) = v9;\n  *(_DWORD *)(a1 + 80) = a2;\n  bzero(v9, a2);\n  if ( *(_QWORD *)(a1 + 288) )\n    sub_B0FC(a1, *(_QWORD *)(a1 + 72), *(unsigned int *)(a1 + 80));\n  return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x5F4C",
+      "name": "sub_5F4C",
+      "size": 84,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x675C (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_5F4C(__int64 a1, unsigned __int64 a2)\n{\n  unsigned __int64 v2; // x9\n  __int64 v3; // x8\n\n  v2 = *(unsigned int *)(a1 + 80);\n  if ( v2 < a2 )\n    return 0;\n  v3 = *(_QWORD *)(a1 + 72);\n  *(_QWORD *)(a1 + 72) = v3 + a2;\n  *(_DWORD *)(a1 + 80) = v2 - a2;\n  return v3;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x5FA0",
+      "name": "sub_5FA0",
+      "size": 76,
+      "calls": [
+        "_bzero",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x5F9C (sub_5F4C)",
+        "0x6768 (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_5FA0(int a1, void *a2, size_t a3)\n{\n  if ( a2 && a3 )\n    bzero(a2, a3);\n  return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x5FEC",
+      "name": "sub_5FEC",
+      "size": 2284,
+      "calls": [
+        "sub_B0FC",
+        "sub_AD8C",
+        "sub_8430",
+        "sub_A418",
+        "_task_info",
+        "sub_8798",
+        "sub_87D8",
+        "sub_8840",
+        "sub_88B4",
+        "sub_8928",
+        "_mmap",
+        "sub_8590",
+        "_vm_allocate",
+        "_memcpy",
+        "_vm_protect",
+        "___error"
+      ],
+      "called_by": [
+        "0x5FE8 (sub_5FA0)",
+        "0x6DF0 (sub_6C44)"
+      ],
+      "string_refs": [
+        "_start",
+        "\tP@"
+      ],
+      "pseudocode": "// bad sp value at call has been detected, the output may be wrong!\n__int64 __fastcall sub_5FEC(\n        __int64 a1,\n        __int64 a2,\n        int a3,\n        _DWORD *a4,\n        int a5,\n        int a6,\n        int a7,\n        int a8,\n        __int64 a9,\n        int a10,\n        int a11,\n        __int64 a12,\n        mach_msg_type_number_t a13,\n        unsigned int a14,\n        __int64 a15,\n        __int64 a16,\n        int a17,\n        unsigned int __na,\n        size_t __n,\n        __int64 a20,\n        __int64 a21,\n        __int64 task_info_out,\n        __int64 a23,\n        int a24)\n{\n  __int64 v27; // x0\n  __int64 v28; // x21\n  __int64 v29; // x0\n  __int64 v30; // x1\n  __int64 v32; // x0\n  __int64 v33; // x0\n  __int64 v34; // x0\n  __int64 v35; // x2\n  kern_return_t v36; // w0\n  __int64 v37; // x1\n  __int64 v38; // x2\n  __int64 v39; // x22\n  unsigned __int64 v40; // x8\n  vm_address_t v41; // x21\n  __int64 v42; // x1\n  __int64 v43; // x2\n  vm_address_t v44; // x22\n  unsigned __int64 v45; // x0\n  __int64 v46; // x1\n  __int64 v47; // x2\n  __int64 v48; // x22\n  __int64 v49; // x0\n  vm_address_t v50; // x8\n  kern_return_t v51; // w0\n  int v52; // w8\n  __int64 v53[8]; // [xsp+20h] [xbp-80h] BYREF\n  mach_msg_type_number_t task_info_outCnt; // [xsp+64h] [xbp-3Ch] BYREF\n  vm_address_t address; // [xsp+68h] [xbp-38h] BYREF\n  __int64 v56; // [xsp+B0h] [xbp+10h]\n\n  v53[0] = 0;\n  if ( a1 && *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n    sub_B0FC(a1, 835585, 0);\n  v27 = sub_B0FC(a1, a2, v53);\n  if ( (_DWORD)v27 )\n  {\n    v28 = v27;\n    if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n    {\nLABEL_8:\n      v29 = a1;\n      v30 = v28;\nLABEL_9:\n      sub_B0FC(v29, v30, 0);\n      return v28;\n    }\n    return v28;\n  }\n  if ( !a15 || a14 <= 3 )\n  {\n    v28 = 708609;\n    if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n    {\n      v29 = a1;\n      v30 = 708609;\n      goto LABEL_9;\n    }\n    return v28;\n  }\n  if ( *(_QWORD *)(a1 + 152) )\n    sub_AD8C();\n  v32 = sub_8430(&a15, &a14);\n  if ( (_DWORD)v32 )\n  {\n    v28 = v32;\n    if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n      goto LABEL_8;\n    return v28;\n  }\n  if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n    sub_B0FC(a1, 835586, 0);\n  a12 = 0;\n  a11 = 0;\n  v33 = sub_B0FC(a1, 458752, a15);\n  if ( (_DWORD)v33 )\n  {\n    v28 = v33;\n    if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n      goto LABEL_8;\n    return v28;\n  }\n  v34 = sub_A418(a1, 458752, &a12, &a11);\n  if ( (_DWORD)v34 )\n  {\n    v28 = v34;\n    if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n      goto LABEL_8;\n    return v28;\n  }\n  *(_QWORD *)(a1 + 104) = a12;\n  *(_DWORD *)(a1 + 112) = a11;\n  if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n    sub_B0FC(a1, 835587, 0);\n  if ( *(_BYTE *)(a1 + 1474) || *(_BYTE *)(a1 + 1475) )\n  {\n    if ( !*(_BYTE *)(a1 + 1513) || *(_BYTE *)(a1 + 1512) )\n    {\nLABEL_40:\n      *(_BYTE *)(a1 + 1476) = 1;\n      goto LABEL_41;\n    }\n    task_info_outCnt = 5;\n    task_info_out = 0;\n    a23 = 0;\n    a24 = 0;\n    address = 0;\n    v36 = task_info(mach_task_self_, 0x11u, (task_info_t)&task_info_out, &task_info_outCnt);\n    if ( v36 )\n    {\n      v28 = v36 | 0x80000000;\n      goto LABEL_51;\n    }\n    if ( !task_info_out )\n    {\n      v28 = 20487;\n      goto LABEL_51;\n    }\n    v44 = *(_QWORD *)(task_info_out + 40) & 0xFFFFFFFFFFFFFFFELL;\n    if ( v44 )\n    {\n      address = *(_QWORD *)v44;\n      if ( !address )\n      {\n        v28 = 4097;\n        goto LABEL_51;\n      }\n    }\n    else\n    {\n      v56 = task_info_out;\n      a20 = 0;\n      a21 = 0;\n      __n = 0;\n      __na = 0;\n      v49 = sub_B0FC(a1, 327680, &__n);\n      if ( (_DWORD)v49\n        || (v49 = sub_8590(a1, 589825, &a21), (_DWORD)v49)\n        || (v49 = sub_87D8(a21, 0, &a20), (_DWORD)v49)\n        || (a16 = mach_task_self_, v49 = sub_8840(a21, a20, 3221225499LL, &a16), (_DWORD)v49)\n        || (!BYTE6(a16) || !BYTE5(a16))\n        && (*(_WORD *)((char *)&a16 + 5) = 257, v49 = sub_8840(a21, a20, 1073741851, &a16), (_DWORD)v49)\n        || (v49 = sub_8840(a21, a20, 13, 0), (_DWORD)v49) )\n      {\n        v28 = v49;\n        v44 = 0;\n      }\n      else\n      {\n        v44 = (vm_address_t)mmap(0, 0x1000000u, 3, 6146, -1, 0);\n        if ( v44 == -1 )\n        {\n          v52 = *__error();\n          if ( v52 < 0 )\n            v52 = -v52;\n          v28 = v52 | 0x40000000u;\n        }\n        else\n        {\n          v51 = vm_allocate(mach_task_self_, &address, 0x1000000u, 1);\n          if ( v51\n            || (*(_QWORD *)v44 = address,\n                memcpy((void *)(v44 + vm_page_size), (const void *)__n, __na),\n                (v51 = vm_protect(mach_task_self_, v44, 0x1000000u, 0, 7)) != 0) )\n          {\n            v28 = v51 | 0x80000000;\n          }\n          else\n          {\n            v28 = sub_8840(a21, a20, 38, 0);\n            if ( !(_DWORD)v28 )\n              *(_QWORD *)(v56 + 40) = *(_QWORD *)(v56 + 40) & 1LL | v44;\n          }\n        }\n      }\n      v37 = a21;\n      if ( a21 )\n      {\n        if ( a20 )\n        {\n          sub_88B4(a21, a20);\n          v37 = a21;\n        }\n        sub_8928(a1, v37);\n      }\n      if ( (_DWORD)v28 )\n      {\nLABEL_51:\n        if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n          goto LABEL_8;\n        return v28;\n      }\n    }\n    sub_B0FC(a1, v37, v38);\n    v50 = address;\n    *(_QWORD *)(a1 + 136) = address + 0x100000;\n    *(_DWORD *)(a1 + 144) = 15728640;\n    *(_QWORD *)(a1 + 312) = v50 + 16777212;\n    *(_QWORD *)(a1 + 1488) = v44;\n    *(_QWORD *)(a1 + 1496) = v50;\n    *(_DWORD *)(a1 + 80) = 0;\n    *(_QWORD *)(a1 + 296) = sub_5E78;\n    *(_QWORD *)(a1 + 40) = sub_5F4C;\n    *(_QWORD *)(a1 + 176) = sub_5FA0;\n    *(_BYTE *)(a1 + 1479) = 1;\n    *(_WORD *)(a1 + 1476) = 1;\n    goto LABEL_41;\n  }\n  if ( task_info(mach_task_self_, 0x11u, (task_info_t)&task_info_out, &a13) || (v39 = task_info_out) == 0 )\n  {\n    if ( !*(_BYTE *)(a1 + 1515) || !*(_QWORD *)(a1 + 1520) )\n      return 20487;\n    v28 = 20487;\n    v29 = a1;\n    v30 = 20487;\n    goto LABEL_9;\n  }\n  v40 = *(_QWORD *)(task_info_out + 40) & 0xFFFFFFFFFFFFFFFELL;\n  if ( v40 )\n  {\n    if ( (vm_page_mask & v40) != 0 )\n    {\n      if ( !*(_BYTE *)(a1 + 1515) || !*(_QWORD *)(a1 + 1520) )\n        return 20486;\n      v28 = 20486;\n      v29 = a1;\n      v30 = 20486;\n      goto LABEL_9;\n    }\n    *(_QWORD *)(a1 + 312) = 0;\n    *(_QWORD *)(a1 + 136) = v40;\n    *(_DWORD *)(a1 + 144) = 0x1000000;\n    *(_DWORD *)(a1 + 80) = 0;\n    *(_OWORD *)(a1 + 1488) = 0u;\n  }\n  else\n  {\n    v28 = sub_8798(a1, &a21);\n    if ( !(_DWORD)v28 )\n    {\n      v28 = sub_87D8(a21, 0, &address);\n      if ( !(_DWORD)v28 )\n      {\n        v28 = sub_8840(a21, address, 13, 0);\n        sub_88B4(a21, address);\n      }\n      sub_8928(a1, a21);\n    }\n    if ( (_DWORD)v28 == 28675 )\n      goto LABEL_40;\n    if ( (_DWORD)v28 )\n    {\n      if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n        goto LABEL_8;\n      return v28;\n    }\n    v45 = (unsigned __int64)mmap(0, 0x1000000u, 7, 6146, -1, 0);\n    if ( v45 == -1 )\n      v46 = 20488;\n    else\n      v46 = 0;\n    if ( v45 == -1 )\n    {\n      if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n        sub_B0FC(a1, v46, 0);\n      return 20488;\n    }\n    *(_QWORD *)(a1 + 312) = 0;\n    *(_QWORD *)(a1 + 136) = v45;\n    *(_DWORD *)(a1 + 144) = 0x1000000;\n    *(_DWORD *)(a1 + 80) = 0;\n    *(_OWORD *)(a1 + 1488) = 0u;\n    *(_QWORD *)(v39 + 40) = *(_QWORD *)(v39 + 40) & 1LL | v45;\n  }\nLABEL_41:\n  if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n    sub_B0FC(a1, 835588, 0);\n  v28 = sub_B0FC(a1, 0x80000, v35);\n  if ( (_DWORD)v28 || (v28 = sub_B0FC(a1, 0x80000, &address), (_DWORD)v28) )\n  {\nLABEL_46:\n    if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n      goto LABEL_8;\n    return v28;\n  }\n  v41 = address;\n  if ( !address )\n  {\n    v28 = 20484;\n    goto LABEL_46;\n  }\n  if ( *(_QWORD *)(a1 + 288) )\n    sub_B0FC(a1, *(_QWORD *)(address + 88), *(unsigned int *)(address + 168));\n  v28 = sub_B0FC(a1, v41, \"_start\");\n  if ( !(_DWORD)v28 )\n  {\n    if ( address )\n    {\n      if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n        sub_B0FC(a1, 835589, 0);\n      v48 = sub_B0FC(a1, v42, v43);\n      if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n        sub_B0FC(a1, v48, 0);\n      sub_B0FC(a1, 0x80000, v47);\n      v28 = 0;\n      *a4 = v48;\n      return v28;\n    }\n    v28 = 20485;\n  }\n  if ( *(_BYTE *)(a1 + 1515) && *(_QWORD *)(a1 + 1520) )\n    goto LABEL_8;\n  return v28;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x68D8",
+      "name": "_process",
+      "size": 876,
+      "calls": [
+        "sub_96F8",
+        "sub_8210",
+        "sub_7720",
+        "sub_8AB8",
+        "sub_B0FC",
+        "sub_71FC",
+        "_sysctlbyname",
+        "_bzero",
+        "_mach_host_self",
+        "_host_info",
+        "sub_8298",
+        "_malloc",
+        "_memcpy",
+        "_strdup",
+        "_pthread_attr_init",
+        "_pthread_attr_setdetachstate",
+        "sub_5D2C",
+        "sub_B15C",
+        "_pthread_create",
+        "_pthread_attr_destroy"
+      ],
+      "called_by": [],
+      "string_refs": [
+        "hw.l2cachesize",
+        "kern.bootargs"
+      ],
+      "pseudocode": "// bad sp value at call has been detected, the output may be wrong!\n__int64 __fastcall process(\n        __int64 a1,\n        __int64 a2,\n        __int64 a3,\n        __int64 a4,\n        __int64 a5,\n        __int64 a6,\n        __int64 a7,\n        __int64 a8,\n        __int64 a9,\n        size_t a10)\n{\n  __int64 v10; // x21\n  __int64 result; // x0\n  int v13; // w1\n  int v14; // w2\n  int v15; // w3\n  int v16; // w4\n  int v17; // w5\n  int v18; // w6\n  int v19; // w7\n  unsigned int v20; // w8\n  int v21; // w8\n  int v22; // w9\n  int v23; // w0\n  unsigned int v24; // w8\n  unsigned int v25; // w8\n  int v26; // w8\n  mach_port_t v27; // w0\n  kern_return_t v28; // w8\n  _QWORD *v29; // x0\n  _QWORD *v30; // x20\n  const char *v31; // x0\n  char *v32; // x0\n  _OWORD *v33; // x19\n  _OWORD *v34; // x0\n  __int128 v35; // q1\n  const char *v36; // x0\n  char *v37; // x0\n  const char *v38; // x0\n  char *v39; // x0\n  const char *v40; // x0\n  char *v41; // x0\n  __int64 v42; // x0\n  void *(__cdecl *v43)(void *); // x0\n  __int64 v44; // [xsp+0h] [xbp-430h]\n  __int64 v45; // [xsp+8h] [xbp-428h]\n  __int64 v46; // [xsp+10h] [xbp-420h]\n  __int64 v47; // [xsp+18h] [xbp-418h]\n  __int64 v48; // [xsp+20h] [xbp-410h]\n  __int64 v49; // [xsp+28h] [xbp-408h]\n  __int64 v50; // [xsp+30h] [xbp-400h]\n  __int64 v51; // [xsp+38h] [xbp-3F8h]\n  __int64 v52; // [xsp+40h] [xbp-3F0h]\n  __int64 v53; // [xsp+48h] [xbp-3E8h]\n  char v54; // [xsp+50h] [xbp-3E0h]\n  size_t v55; // [xsp+408h] [xbp-28h] BYREF\n\n  v10 = 708617;\n  if ( !a1 )\n    return 708609;\n  result = sub_96F8(a1, a2, a3, a4, a5, a6, a7, a8);\n  if ( !(_DWORD)result )\n  {\n    result = sub_8210(a1);\n    if ( !(_DWORD)result )\n    {\n      result = sub_7720(\n                 a1,\n                 v13,\n                 v14,\n                 v15,\n                 v16,\n                 v17,\n                 v18,\n                 v19,\n                 v44,\n                 v45,\n                 v46,\n                 v47,\n                 v48,\n                 v49,\n                 v50,\n                 SHIDWORD(v50),\n                 v51,\n                 v52,\n                 SHIDWORD(v52),\n                 v53,\n                 SHIDWORD(v53),\n                 v54);\n      if ( !(_DWORD)result )\n      {\n        result = sub_8AB8(a1);\n        if ( !(_DWORD)result )\n        {\n          result = 708616;\n          if ( (unsigned __int64)(*(_QWORD *)(a1 + 208) - 0x18090006700000LL) <= 0xF090EFE400003LL )\n          {\n            if ( *(_BYTE *)(a1 + 1512) )\n            {\n              result = 159753;\n              v20 = *(_DWORD *)(a1 + 192);\n              if ( v20 < 0x100000 )\n                return result;\n              if ( v20 >= 0x100401 )\n              {\n                v21 = *(_DWORD *)(a1 + 224);\n                if ( v21 > 458787762 )\n                {\n                  if ( v21 != 1176831186 )\n                  {\n                    v22 = 458787763;\nLABEL_17:\n                    if ( v21 != v22 )\n                      return result;\n                  }\n                }\n                else if ( v21 != -2023363094 )\n                {\n                  v22 = -634136515;\n                  goto LABEL_17;\n                }\n              }\n            }\n            LOBYTE(a10) = 1;\n            v23 = sub_71FC(&a10);\n            if ( (_BYTE)a10 )\n              v24 = 0;\n            else\n              v24 = 708644;\n            if ( v23 )\n              result = 708619;\n            else\n              result = v24;\n            if ( !(_DWORD)result )\n            {\n              v25 = *(_DWORD *)(a1 + 192);\n              result = 708616;\n              if ( v25 <= 0x1102FF )\n              {\n                if ( v25 < 0xE0000\n                  || ((a10 = 8, v55 = 0, v26 = sysctlbyname(\"hw.l2cachesize\", &v55, &a10, 0, 0), !(v55 >> 20))\n                    ? (result = 708644)\n                    : (result = 0),\n                      v26 || v55 >= 0x100000) )\n                {\n                  v55 = 1024;\n                  bzero(&a10, 0x400u);\n                  if ( !sysctlbyname(\"kern.bootargs\", &a10, &v55, 0, 0)\n                    && (_BYTE)a10\n                    && ((unsigned __int8)a10 != 32 || BYTE1(a10)) )\n                  {\n                    return 708644;\n                  }\n                  if ( *(_DWORD *)(a1 + 192) > 0xF0000u )\n                    goto LABEL_42;\n                  LODWORD(a10) = 1;\n                  v27 = mach_host_self();\n                  v28 = host_info(v27, 11, (host_info_t)&v55, (mach_msg_type_number_t *)&a10);\n                  result = (_DWORD)v55 ? 708644LL : 0LL;\n                  if ( v28 )\n                    goto LABEL_42;\n                }\n                if ( !(_DWORD)result )\n                {\nLABEL_42:\n                  result = sub_8298(a1);\n                  if ( !(_DWORD)result )\n                  {\n                    v29 = malloc(0x648u);\n                    if ( v29 )\n                    {\n                      v30 = v29;\n                      memcpy(v29, (const void *)a1, 0x648u);\n                      v31 = (const char *)v30[16];\n                      if ( v31 )\n                      {\n                        v32 = strdup(v31);\n                        if ( !v32 )\n                          return v10;\n                        v30[16] = v32;\n                      }\n                      v33 = (_OWORD *)v30[19];\n                      if ( v33 )\n                      {\n                        v34 = malloc(0x20u);\n                        if ( !v34 )\n                          return v10;\n                        v35 = v33[1];\n                        *v34 = *v33;\n                        v34[1] = v35;\n                        v30[19] = v34;\n                      }\n                      v36 = (const char *)v30[15];\n                      if ( v36 )\n                      {\n                        v37 = strdup(v36);\n                        if ( !v37 )\n                          return v10;\n                        v30[15] = v37;\n                      }\n                      v38 = (const char *)v30[20];\n                      if ( v38 )\n                      {\n                        v39 = strdup(v38);\n                        if ( !v39 )\n                          return v10;\n                        v30[20] = v39;\n                      }\n                      v40 = (const char *)v30[21];\n                      if ( !v40 )\n                        goto LABEL_59;\n                      v41 = strdup(v40);\n                      if ( v41 )\n                      {\n                        v30[21] = v41;\nLABEL_59:\n                        v10 = 118785;\n                        if ( !pthread_attr_init((pthread_attr_t *)&a10) )\n                        {\n                          if ( !pthread_attr_setdetachstate((pthread_attr_t *)&a10, 2) )\n                          {\n                            sub_5D2C();\n                            v43 = (void *(__cdecl *)(void *))sub_B15C(v42, 0);\n                            if ( pthread_create((pthread_t *)&v55, (const pthread_attr_t *)&a10, v43, v30) )\n                              v10 = 118786;\n                            else\n                              v10 = 0;\n                          }\n                          pthread_attr_destroy((pthread_attr_t *)&a10);\n                        }\n                      }\n                    }\n                    return v10;\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x6C44",
+      "name": "sub_6C44",
+      "size": 640,
+      "calls": [
+        "sub_5CEC",
+        "sub_5D68",
+        "_sigaction",
+        "___error",
+        "_objc_alloc",
+        "sub_B1D4",
+        "sub_B15C",
+        "_malloc",
+        "_memcpy",
+        "_objc_msgSend$beginBackgroundTaskWithExpirationHandler:",
+        "-[UIApplication beginBackgroundTaskWithExpirationHandler:]",
+        "sub_5FEC",
+        "_objc_msgSend$endBackgroundTask:",
+        "-[UIApplication endBackgroundTask:]",
+        "__Block_object_dispose",
+        "sub_B0FC",
+        "_exit"
+      ],
+      "called_by": [
+        "0x6BFC (_process)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_6C44(__int64 a1)\n{\n  __int64 v2; // x20\n  int v3; // w8\n  int v4; // w25\n  UIApplication *v5; // x0\n  UIApplication *v6; // x21\n  const void *v7; // x23\n  size_t v8; // x24\n  void *v9; // x0\n  __int64 v10; // x22\n  void *v11; // x0\n  int v12; // w2\n  int v13; // w4\n  int v14; // w5\n  int v15; // w6\n  int v16; // w7\n  __int64 v17; // x1\n  unsigned int v18; // w0\n  void *v19; // x2\n  int v20; // w8\n  __int64 v22; // [xsp+0h] [xbp-B0h]\n  int v23[2]; // [xsp+8h] [xbp-A8h] BYREF\n  __int64 v24; // [xsp+10h] [xbp-A0h]\n  mach_msg_type_number_t v25[2]; // [xsp+18h] [xbp-98h] BYREF\n  __int64 v26; // [xsp+20h] [xbp-90h]\n  __int64 v27; // [xsp+28h] [xbp-88h]\n  sigaction *v28; // [xsp+30h] [xbp-80h]\n  sigaction v29; // [xsp+38h] [xbp-78h] BYREF\n  __int64 v30; // [xsp+48h] [xbp-68h]\n  integer_t task_info_out[2]; // [xsp+50h] [xbp-60h]\n  sigaction v32; // [xsp+58h] [xbp-58h] BYREF\n  unsigned int v33; // [xsp+6Ch] [xbp-44h] BYREF\n\n  v2 = 708617;\n  v33 = 708608;\n  if ( *(unsigned __int16 *)(a1 + 194) > 0xEu || !sub_5CEC() )\n  {\n    v4 = 0;\n    goto LABEL_8;\n  }\n  v29.__sigaction_u.__sa_handler = (void (__cdecl *)(int))sub_5D68((__int64)sub_6FEC, 0);\n  *(_QWORD *)&v29.sa_mask = 0x4000000000LL;\n  if ( !sigaction(11, &v29, &v32) )\n  {\n    v4 = 1;\nLABEL_8:\n    v29.__sigaction_u.__sa_handler = 0;\n    *(_QWORD *)&v29.sa_mask = &v29;\n    v30 = 0x2020000000LL;\n    *(_QWORD *)task_info_out = UIBackgroundTaskInvalid;\n    v5 = objc_alloc(&OBJC_CLASS___UIApplication);\n    if ( v5 )\n    {\n      v6 = v5;\n      *(_QWORD *)v23 = _NSConcreteStackBlock;\n      v24 = 3254779904LL;\n      *(_QWORD *)v25 = sub_6EC4;\n      v26 = (__int64)&unk_C090;\n      v27 = (__int64)v5;\n      v28 = &v29;\n      if ( !sub_5CEC() )\n        goto LABEL_13;\n      *(_QWORD *)v23 = sub_B1D4(_NSConcreteStackBlock, (unsigned __int64)v23 | 0x6AE1000000000000LL);\n      *(_QWORD *)v25 = sub_B15C(*(_QWORD *)v25, v25);\n      v7 = (const void *)v26;\n      if ( !v26 )\n        goto LABEL_13;\n      v8 = *(_QWORD *)(v26 + 8);\n      v9 = malloc(v8);\n      if ( v9 )\n      {\n        v10 = (__int64)v9;\n        memcpy(v9, v7, v8);\n        *(_QWORD *)(v10 + 16) = sub_B15C(*(_QWORD *)(v10 + 16), v10 + 16);\n        *(_QWORD *)(v10 + 24) = sub_B15C(*(_QWORD *)(v10 + 24), v10 + 24);\n        v26 = v10;\nLABEL_13:\n        v11 = -[UIApplication beginBackgroundTaskWithExpirationHandler:](\n                v6,\n                \"beginBackgroundTaskWithExpirationHandler:\",\n                v23);\n        *(_QWORD *)(*(_QWORD *)&v29.sa_mask + 24LL) = v11;\n        v17 = *(_QWORD *)(a1 + 128);\n        if ( v17 )\n        {\n          v18 = sub_5FEC(\n                  a1,\n                  v17,\n                  v12,\n                  &v33,\n                  v13,\n                  v14,\n                  v15,\n                  v16,\n                  v22,\n                  v23[0],\n                  v23[1],\n                  v24,\n                  v25[0],\n                  v25[1],\n                  v26,\n                  v27,\n                  (int)v28,\n                  HIDWORD(v28),\n                  (size_t)v29.__sigaction_u.__sa_handler,\n                  *(__int64 *)&v29.sa_mask,\n                  v30,\n                  *(__int64 *)task_info_out,\n                  (__int64)v32.__sigaction_u.__sa_handler,\n                  v32.sa_mask);\n          if ( v18 )\n            v2 = v18;\n          else\n            v2 = v33;\n          v19 = *(void **)(*(_QWORD *)&v29.sa_mask + 24LL);\n        }\n        else\n        {\n          v19 = v11;\n          v2 = 0;\n        }\n        if ( v19 != (void *)UIBackgroundTaskInvalid )\n        {\n          -[UIApplication endBackgroundTask:](v6, \"endBackgroundTask:\");\n          *(_QWORD *)(*(_QWORD *)&v29.sa_mask + 24LL) = UIBackgroundTaskInvalid;\n        }\n        if ( v4 && sigaction(11, &v32, 0) )\n        {\n          v20 = *__error();\n          if ( v20 < 0 )\n            v20 = -v20;\n          v2 = v20 | 0x40000000u;\n        }\n        else if ( *(_BYTE *)(a1 + 1516) )\n        {\n          exit(0);\n        }\n      }\n    }\n    _Block_object_dispose(&v29, 8);\n    return v2;\n  }\n  v3 = *__error();\n  if ( v3 < 0 )\n    v3 = -v3;\n  return v3 | 0x40000000u;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x6EC4",
+      "name": "sub_6EC4",
+      "size": 108,
+      "calls": [
+        "_objc_msgSend$endBackgroundTask:",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x6D28 (sub_6C44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "void *__fastcall sub_6EC4(__int64 a1)\n{\n  void *result; // x0\n\n  result = objc_msgSend(\n             *(id *)(a1 + 32),\n             \"endBackgroundTask:\",\n             *(_QWORD *)(*(_QWORD *)(*(_QWORD *)(a1 + 40) + 8LL) + 24LL));\n  *(_QWORD *)(*(_QWORD *)(*(_QWORD *)(a1 + 40) + 8LL) + 24LL) = UIBackgroundTaskInvalid;\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x6F30",
+      "name": "sub_6F30",
+      "size": 100,
+      "calls": [
+        "__Block_object_assign",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x6F2C (sub_6EC4)",
+        "0xC0A0"
+      ],
+      "string_refs": [],
+      "pseudocode": "void __fastcall sub_6F30(__int64 a1, __int64 a2)\n{\n  _Block_object_assign((void *)(a1 + 32), *(const void **)(a2 + 32), 3);\n  _Block_object_assign((void *)(a1 + 40), *(const void **)(a2 + 40), 8);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x6F94",
+      "name": "sub_6F94",
+      "size": 88,
+      "calls": [
+        "__Block_object_dispose",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x6F90 (sub_6F30)",
+        "0xC0A8"
+      ],
+      "string_refs": [],
+      "pseudocode": "void __fastcall sub_6F94(__int64 a1)\n{\n  _Block_object_dispose(*(const void **)(a1 + 40), 8);\n  _Block_object_dispose(*(const void **)(a1 + 32), 3);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x6FEC",
+      "name": "sub_6FEC",
+      "size": 164,
+      "calls": [
+        "_abort",
+        "sub_5D68",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x6FE8 (sub_6F94)",
+        "0x6C88 (sub_6C44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_6FEC(__int64 a1, __int64 a2, __int64 a3)\n{\n  __int64 *v3; // x19\n  unsigned __int64 v4; // x8\n  __int64 result; // x0\n  __int64 v6; // x9\n  unsigned __int64 v7; // x10\n  __int64 v8; // x0\n  __int64 v9; // x8\n\n  v3 = *(__int64 **)(a3 + 48);\n  v4 = v3[34];\n  if ( v4 >> 39 != 0x4000 )\n  {\n    v6 = *v3;\n    v7 = *v3 & 0xFFFFFF8000000000LL;\n    if ( v7 == 0x2000000000000000LL )\n    {\n      v8 = v6 & 0x7FFFFFFFFFLL;\n      if ( (v6 & 0x7FFFFFFFFFLL) != (v4 & 0x7FFFFFFFFFLL) )\n        goto LABEL_8;\n    }\n    else\n    {\n      v8 = v6 & 0x7FFFFFFFFFLL;\n      v9 = v4 & 0x7FFFFFFFFFLL;\n      if ( v7 != 0x20000000000000LL || v8 != v9 )\nLABEL_8:\n        abort();\n    }\n    result = sub_5D68(v8, 29825);\n    goto LABEL_11;\n  }\n  result = v4 & 0xFFDFFFFFFFFFFFFFLL;\nLABEL_11:\n  v3[34] = result;\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7090",
+      "name": "sub_7090",
+      "size": 364,
+      "calls": [
+        "sub_7A98",
+        "_CFStringCreateWithCString",
+        "_CFDictionaryGetValue",
+        "_CFGetTypeID",
+        "_CFStringGetTypeID",
+        "_CFStringGetSystemEncoding",
+        "_CFStringGetCString",
+        "_CFRelease",
+        "_sscanf",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x708C (sub_6FEC)",
+        "0x781C (sub_7720)"
+      ],
+      "string_refs": [
+        "/System/Cryptexes/OS/System/Library/CoreServices/SystemVersion.plist",
+        "/System/Library/CoreServices/SystemVersion.plist",
+        "ProductVersion",
+        "%d.%d.%d"
+      ],
+      "pseudocode": "__int64 __fastcall sub_7090(int *a1)\n{\n  const __CFDictionary *v2; // x20\n  CFStringRef v3; // x0\n  CFStringRef v4; // x21\n  const __CFString *Value; // x0\n  const __CFString *v6; // x22\n  CFTypeID v7; // x23\n  CFStringEncoding SystemEncoding; // w0\n  int CString; // w22\n  char buffer[32]; // [xsp+24h] [xbp-5Ch] BYREF\n  int v12; // [xsp+44h] [xbp-3Ch] BYREF\n  int v13; // [xsp+48h] [xbp-38h] BYREF\n  int v14; // [xsp+4Ch] [xbp-34h] BYREF\n\n  v12 = 0;\n  v2 = (const __CFDictionary *)sub_7A98(\"/System/Cryptexes/OS/System/Library/CoreServices/SystemVersion.plist\");\n  if ( !v2 )\n  {\n    v2 = (const __CFDictionary *)sub_7A98(\"/System/Library/CoreServices/SystemVersion.plist\");\n    if ( !v2 )\n      return 0xFFFFFFFFLL;\n  }\n  v3 = CFStringCreateWithCString(kCFAllocatorDefault, \"ProductVersion\", 0x8000100u);\n  if ( !v3 )\n    goto LABEL_10;\n  v4 = v3;\n  Value = (const __CFString *)CFDictionaryGetValue(v2, v3);\n  if ( !Value || (v6 = Value, v7 = CFGetTypeID(Value), v7 != CFStringGetTypeID()) )\n  {\n    CFRelease(v4);\nLABEL_10:\n    CFRelease(v2);\n    return 0xFFFFFFFFLL;\n  }\n  SystemEncoding = CFStringGetSystemEncoding();\n  CString = CFStringGetCString(v6, buffer, 32, SystemEncoding);\n  CFRelease(v4);\n  CFRelease(v2);\n  if ( !CString )\n    return 0xFFFFFFFFLL;\n  if ( sscanf(buffer, \"%d.%d.%d\", &v14, &v13, &v12) < 2 )\n    return 4294967294LL;\n  *a1 = (v13 << 8) | (v14 << 16) | v12;\n  return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x71FC",
+      "name": "sub_71FC",
+      "size": 808,
+      "calls": [
+        "_stat",
+        "_getpid",
+        "_sandbox_check",
+        "_dlopen",
+        "_dlsym",
+        "sub_5D2C",
+        "sub_B0FC",
+        "_CFStringCreateWithCString",
+        "_CFStringGetTypeID",
+        "_CFGetTypeID",
+        "_CFStringGetCString",
+        "_CFRelease",
+        "_dlclose"
+      ],
+      "called_by": [
+        "0x6A20 (_process)",
+        "0x75E8 (sub_7524)",
+        "0x7694 (sub_7638)"
+      ],
+      "string_refs": [
+        "/usr/libexec/corelliumd",
+        "IOPlatformSerialNumber",
+        "iokit-get-properties",
+        "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+        "kIOMasterPortDefault",
+        "IORegistryEntryFromPath",
+        "IORegistryEntryCreateCFProperty",
+        "IOObjectRelease",
+        "IODeviceTree:/",
+        "IOPlatformSerialNumber"
+      ],
+      "pseudocode": "__int64 __fastcall sub_71FC(_BYTE *a1)\n{\n  __int64 v2; // x0\n  void *v3; // x0\n  void *v4; // x20\n  unsigned int *v5; // x0\n  unsigned int *v6; // x22\n  __int64 v7; // x0\n  __int64 v8; // x24\n  __int64 v9; // x0\n  __int64 v10; // x23\n  __int64 v11; // x0\n  __int64 v12; // x2\n  __int64 v13; // x0\n  __int64 v14; // x22\n  CFStringRef v15; // x0\n  __int64 v16; // x1\n  __int64 v17; // x2\n  CFStringRef v18; // x24\n  __int64 v19; // x0\n  const __CFString *v20; // x23\n  CFTypeID TypeID; // x25\n  int v22; // w25\n  unsigned __int64 v24; // x8\n  __int64 v25; // x8\n  __int64 v26; // x9\n  __int64 v27; // x0\n  unsigned __int64 v28; // x20\n  __int64 v29; // x0\n  int v30; // w8\n  stat v33; // [xsp+10h] [xbp-110h] BYREF\n  char buffer[16]; // [xsp+A0h] [xbp-80h] BYREF\n  __int128 v35; // [xsp+B0h] [xbp-70h]\n  __int128 v36; // [xsp+C0h] [xbp-60h]\n  __int128 v37; // [xsp+D0h] [xbp-50h]\n\n  if ( !a1 )\n    return 0xFFFFFFFFLL;\n  v36 = 0u;\n  v37 = 0u;\n  *(_OWORD *)buffer = 0u;\n  v35 = 0u;\n  memset(&v33, 0, sizeof(v33));\n  if ( stat(\"/usr/libexec/corelliumd\", &v33) )\n  {\n    v2 = getpid();\n    if ( (int)sandbox_check(v2, \"iokit-get-properties\", SANDBOX_CHECK_NO_REPORT) <= 0 )\n    {\n      v3 = dlopen(\"/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit\", 1);\n      if ( v3 )\n      {\n        v4 = v3;\n        dlsym(v3, \"kIOMasterPortDefault\");\n        sub_5D2C();\n        v6 = v5;\n        dlsym(v4, \"IORegistryEntryFromPath\");\n        sub_5D2C();\n        v8 = v7;\n        dlsym(v4, \"IORegistryEntryCreateCFProperty\");\n        sub_5D2C();\n        v10 = v9;\n        dlsym(v4, \"IOObjectRelease\");\n        sub_5D2C();\n        if ( v8 && v10 && v11 && v6 && (v13 = sub_B0FC(*v6, \"IODeviceTree:/\", v12), (_DWORD)v13) )\n        {\n          v14 = v13;\n          v15 = CFStringCreateWithCString(kCFAllocatorDefault, \"IOPlatformSerialNumber\", 0x8000100u);\n          if ( v15 )\n          {\n            v18 = v15;\n            v19 = sub_B0FC(v14, v15, kCFAllocatorDefault);\n            if ( v19 && (v20 = (const __CFString *)v19, TypeID = CFStringGetTypeID(), TypeID == CFGetTypeID(v20)) )\n            {\n              if ( CFStringGetCString(v20, buffer, 64, 0x8000100u) )\n                v22 = 0;\n              else\n                v22 = -1;\n              CFRelease(v20);\n            }\n            else\n            {\n              v22 = -1;\n            }\n            CFRelease(v18);\n          }\n          else\n          {\n            v22 = -1;\n          }\n          sub_B0FC(v14, v16, v17);\n          dlclose(v4);\n          if ( !v22 )\n          {\n            v25 = *(_QWORD *)buffer ^ 0x55494C4C45524F43LL;\n            v26 = (unsigned __int8)buffer[8] ^ 0x4DLL;\n            v36 = 0u;\n            v37 = 0u;\n            *(_OWORD *)buffer = 0u;\n            v35 = 0u;\n            v24 = v25 | v26;\n            if ( !v24 )\n              goto LABEL_38;\n          }\n        }\n        else\n        {\n          dlclose(v4);\n        }\n      }\n    }\n    sub_5D2C();\n    v28 = *(_QWORD *)(v27 + 12) & 0xFFFFFFFFFFFFFF00LL;\n    if ( !v28 )\n      return 0xFFFFFFFFLL;\n    sub_5D2C();\n    v24 = *(_QWORD *)(v29 + 12) & 0xFFFFFFFFFFFFFF00LL;\n    if ( v24 )\n    {\n      v30 = *(_DWORD *)&stru_68.segname[(*(_QWORD *)(v29 + 12) & 0xFFFFFFFFFFFFFF00LL) + 8];\n      if ( v30 == -1829029944 || v30 == 933271106 || v30 == 747742334 )\n        LODWORD(v24) = (*(_DWORD *)(v28 + 16) >> 26) & 1;\n      else\n        LODWORD(v24) = *(unsigned __int16 *)(v28 + 38) != 128;\n    }\n    LOBYTE(v24) = (_DWORD)v24 == 0;\n  }\n  else\n  {\n    LOBYTE(v24) = 0;\n  }\nLABEL_38:\n  *a1 = v24;\n  return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7524",
+      "name": "sub_7524",
+      "size": 276,
+      "calls": [
+        "sub_5D2C",
+        "sub_B0FC",
+        "sub_71FC"
+      ],
+      "called_by": [
+        "0x7520 (sub_71FC)",
+        "0x79D4 (sub_7720)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_7524(_BYTE *a1)\n{\n  __int64 v2; // x0\n  char v3; // w8\n  int v4; // w9\n  bool v5; // zf\n  int v6; // w10\n  char v9; // [xsp+Fh] [xbp-11h] BYREF\n\n  if ( !a1 )\n    return 0xFFFFFFFFLL;\n  v9 = 0;\n  sub_5D2C();\n  if ( (*(_QWORD *)(v2 + 12) & 0xFFFFFFFFFFFFFF00LL) == 0 )\n    return 4294967294LL;\n  v3 = 0;\n  v4 = *(_DWORD *)&stru_68.segname[(*(_QWORD *)(v2 + 12) & 0xFFFFFFFFFFFFFF00LL) + 8];\n  if ( v4 <= 458787762 )\n  {\n    v5 = v4 == -2023363094;\n    v6 = -634136515;\n  }\n  else\n  {\n    v5 = v4 == 458787763 || v4 == 1176831186;\n    v6 = 678884789;\n  }\n  if ( v5 || v4 == v6 )\n  {\n    if ( (unsigned int)sub_71FC(&v9) )\n      return 4294967293LL;\n    v3 = v9;\n  }\n  *a1 = v3;\n  return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7638",
+      "name": "sub_7638",
+      "size": 232,
+      "calls": [
+        "sub_5D2C",
+        "sub_71FC",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x7634 (sub_7524)",
+        "0x79C0 (sub_7720)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_7638(char *a1)\n{\n  __int64 v2; // x0\n  int v3; // w8\n  char v6; // w8\n  char v7; // [xsp+Fh] [xbp-11h] BYREF\n\n  if ( !a1 )\n    return 0xFFFFFFFFLL;\n  sub_5D2C();\n  if ( (*(_QWORD *)(v2 + 12) & 0xFFFFFFFFFFFFFF00LL) == 0 )\n    return 4294967294LL;\n  v3 = *(_DWORD *)&stru_68.segname[(*(_QWORD *)(v2 + 12) & 0xFFFFFFFFFFFFFF00LL) + 8];\n  if ( v3 == 131287967 || v3 == -400654602 )\n  {\n    v7 = 1;\n    if ( (unsigned int)sub_71FC(&v7) )\n      return 4294967293LL;\n    v6 = v7;\n  }\n  else\n  {\n    v6 = 0;\n  }\n  *a1 = v6;\n  return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7720",
+      "name": "sub_7720",
+      "size": 888,
+      "calls": [
+        "_task_info",
+        "_strstr",
+        "sub_5D2C",
+        "sub_7090",
+        "_sysctl",
+        "sub_B0FC",
+        "_mach_host_self",
+        "_host_kernel_version",
+        "_sscanf",
+        "sub_7638",
+        "sub_7524"
+      ],
+      "called_by": [
+        "0x771C (sub_7638)",
+        "0x6914 (_process)"
+      ],
+      "string_refs": [
+        "WebContent",
+        "WebContent",
+        "RELEASE",
+        "xnu-",
+        "xnu-%d.%d.%d.%d.%d%*s"
+      ],
+      "error": "decompile() returned None",
+      "status": "failed",
+      "disassembly": "  0x7720:  STP             X24, X23, [SP,#-0x10+var_30]!\n  0x7724:  STP             X22, X21, [SP,#0x30+var_20]\n  0x7728:  STP             X20, X19, [SP,#0x30+var_10]\n  0x772C:  STP             X29, X30, [SP,#0x30+var_s0]\n  0x7730:  ADD             X29, SP, #0x30\n  0x7734:  SUB             SP, SP, #0x250\n  0x7738:  MOV             X19, X0\n  0x773C:  MOV             W8, #5\n  0x7740:  STR             W8, [SP,#0x280+task_info_outCnt]\n  0x7744:  NOP\n  0x7748:  LDR             X8, =_mach_task_self_\n  0x774C:  LDR             W0, [X8]; target_task    ; target_task\n  0x7750:  ADD             X2, SP, #0x280+task_info_out; task_info_out    ; task_info_out\n  0x7754:  ADD             X3, SP, #0x280+task_info_outCnt; task_info_outCnt    ; task_info_outCnt\n  0x7758:  MOV             W1, #0x11; flavor    ; flavor\n  0x775C:  BL              _task_info\n  0x7760:  LDR             X8, [SP,#0x280+task_info_out]\n  0x7764:  CMP             W0, #0\n  0x7768:  CCMP            X8, #0, #4, EQ\n  0x776C:  B.EQ            loc_78B8\n  0x7770:  LDR             X9, [X8,#0x20]\n  0x7774:  CBZ             X9, loc_78B8\n  0x7778:  LDP             W22, W9, [X9,#4]\n  0x777C:  AND             W21, W9, #0xFFFFFF\n  0x7780:  STP             W22, W21, [X19,#0xD8]\n  0x7784:  LDR             W20, [X8,#4]\n  0x7788:  CBZ             W20, loc_78B8\n  0x778C:  LDR             X23, [X8,#8]\n  0x7790:  CBZ             X23, loc_78B8\n  0x7794:  LDR             X0, [X23,#8]; __big    ; __big\n  0x7798:  ADR             X1, aWebcontent; \"WebContent\"\n  0x779C:  NOP\n  0x77A0:  BL              _strstr\n  0x77A4:  CBZ             X0, loc_77B0\n  0x77A8:  MOV             W20, #1\n  0x77AC:  B               loc_77D4\n  0x77B0:  SUB             W8, W20, #1\n  0x77B4:  MOV             W9, #0x18\n  0x77B8:  UMADDL          X8, W8, W9, X23\n  0x77BC:  LDR             X0, [X8,#8]; __big    ; __big\n  0x77C0:  ADR             X1, aWebcontent; \"WebContent\"\n  0x77C4:  NOP\n  0x77C8:  BL              _strstr\n  0x77CC:  CMP             X0, #0\n  0x77D0:  CSET            W20, NE\n  0x77D4:  STRB            W20, [X19,#0x5FC]\n  0x77D8:  NOP\n  0x77DC:  LDR             X0, =__get_cpu_capabilities\n  0x77E0:  BL              sub_5D2C\n  0x77E4:  LDUR            X8, [X0,#0xC]\n  0x77E8:  ANDS            X8, X8, #0xFFFFFFFFFFFFFF00\n  0x77EC:  B.EQ            loc_78B8\n  0x77F0:  LDR             W8, [X8,#0x80]\n  0x77F4:  STR             W8, [X19,#0xE0]\n  0x77F8:  NOP\n  0x77FC:  LDR             X0, =__get_cpu_capabilities\n  0x7800:  BL              sub_5D2C\n  0x7804:  LDUR            X8, [X0,#0xC]\n  0x7808:  ANDS            X8, X8, #0xFFFFFFFFFFFFFF00\n  0x780C:  B.EQ            loc_78B8\n  0x7810:  LDR             X8, [X8,#0x38]\n  0x7814:  STR             X8, [X19,#0x640]\n  0x7818:  ADD             X0, SP, #0x280+var_250\n  0x781C:  BL              sub_7090\n  0x7820:  CBNZ            W0, loc_78BC\n  0x7824:  LDR             W23, [SP,#0x280+var_250]\n  0x7828:  STR             W23, [X19,#0xC0]\n  0x782C:  MOVI            V0.16B, #0\n  0x7830:  STP             Q0, Q0, [SP,#0x280+var_50]\n  0x7834:  STP             Q0, Q0, [SP,#0x280+var_70]\n  0x7838:  STP             Q0, Q0, [SP,#0x280+var_90]\n  0x783C:  STP             Q0, Q0, [SP,#0x280+var_B0]\n  0x7840:  STP             Q0, Q0, [SP,#0x280+var_D0]\n  0x7844:  STP             Q0, Q0, [SP,#0x280+var_F0]\n  0x7848:  STP             Q0, Q0, [SP,#0x280+var_110]\n  0x784C:  STP             Q0, Q0, [SP,#0x280+var_130]\n  0x7850:  STP             Q0, Q0, [SP,#0x280+var_150]\n  0x7854:  STP             Q0, Q0, [SP,#0x280+var_170]\n  0x7858:  STP             Q0, Q0, [SP,#0x280+var_190]\n  0x785C:  STP             Q0, Q0, [SP,#0x280+var_1B0]\n  0x7860:  STP             Q0, Q0, [SP,#0x280+var_1D0]\n  0x7864:  STP             Q0, Q0, [SP,#0x280+var_1F0]\n  0x7868:  STP             Q0, Q0, [SP,#0x280+var_210]\n  0x786C:  AND             W8, W23, #0xFE0000\n  0x7870:  STP             Q0, Q0, [SP,#0x280+task_info_out]\n  0x7874:  CMP             W8, #0xD0,LSL#12\n  0x7878:  B.LS            loc_78F8\n  0x787C:  MOV             X8, #0x400000001\n  0x7884:  STR             X8, [SP,#0x280+var_240]\n  0x7888:  MOV             W8, #0x200\n  0x788C:  STR             X8, [SP,#0x280+task_info_outCnt]\n  0x7890:  ADD             X0, SP, #0x280+var_240; int *    ; int *\n  0x7894:  ADD             X2, SP, #0x280+task_info_out; void *    ; void *\n  0x7898:  ADD             X3, SP, #0x280+task_info_outCnt; size_t *    ; size_t *\n  0x789C:  MOV             W1, #2; u_int    ; u_int\n  0x78A0:  MOV             X4, #0; void *    ; void *\n  0x78A4:  MOV             X5, #0; size_t    ; size_t\n  0x78A8:  BL              _sysctl\n  0x78AC:  CBZ             W0, loc_7908\n  0x78B0:  MOV             W0, #0xFFFFFFFE\n  0x78B4:  B               loc_78BC\n  0x78B8:  MOV             W0, #0xFFFFFFFF\n  0x78BC:  ADD             SP, SP, #0x250\n  0x78C0:  LDP             X29, X30, [SP,#0x30+var_s0]\n  0x78C4:  LDP             X20, X19, [SP,#0x30+var_10]\n  0x78C8:  LDP             X22, X21, [SP,#0x30+var_20]\n  0x78CC:  LDP             X24, X23, [SP+0x30+var_30],#0x40\n  0x78D0:  MOV             X10, X30\n  0x78D4:  MOV             X30, #0xAAAAAAAAAAAAAAAA\n  0x78D8:  XPACLRI\n  0x78DC:  MOV             X11, #0xAAAAAAAAAAAAAAAA\n  0x78E0:  CMP             X11, X30\n  0x78E4:  MOV             X30, X10\n  0x78E8:  B.NE            loc_78F0\n  0x78EC:  RET\n  0x78F0:  MOV             X10, X30\n  0x78F4:  BL              sub_B0FC\n  0x78F8:  BL              _mach_host_self\n  0x78FC:  ADD             X1, SP, #-0x10+__big; kernel_version    ; kernel_version\n  0x7900:  BL              _host_kernel_version\n  0x7904:  CBNZ            W0, loc_78B0\n  0x7908:  ADR             X1, aRelease; \"RELEASE\"\n  0x790C:  NOP\n  0x7910:  ADD             X0, SP, #-0x10+__big; __big    ; __big\n  0x7914:  BL              _strstr\n  0x7918:  CBZ             X0, loc_7A14\n  0x791C:  ADR             X1, aXnu; \"xnu-\"\n  0x7920:  NOP\n  0x7924:  ADD             X0, SP, #-0x10+__big; __big    ; __big\n  0x7928:  BL              _strstr\n  0x792C:  CBZ             X0, loc_7A1C\n  0x7930:  STR             WZR, [SP,#-0x10+arg_48]\n  0x7934:  STR             WZR, [SP,#-0x10+arg_40]\n  0x7938:  STR             XZR, [SP,#-0x10+arg_38]\n  0x793C:  STR             WZR, [SP,#-0x10+arg_34]\n  0x7940:  ADD             X8, SP, #-0x10+arg_34\n  0x7944:  STR             X8, [SP,#-0x10+arg_20]\n  0x7948:  ADD             X8, SP, #-0x10+arg_38\n  0x794C:  ADD             X9, SP, #-0x10+arg_38+4\n  0x7950:  STP             X9, X8, [SP,#-0x10+arg_10]\n  0x7954:  ADD             X8, SP, #-0x10+arg_40\n  0x7958:  ADD             X9, SP, #-0x10+arg_48\n  0x795C:  STP             X9, X8, [SP,#-0x10+arg_0]\n  0x7960:  ADR             X1, aXnuDDDDDS; \"xnu-%d.%d.%d.%d.%d%*s\"\n  0x7964:  NOP\n  0x7968:  BL              _sscanf\n  0x796C:  CMP             W0, #2\n  0x7970:  B.LE            loc_7A24\n  0x7974:  LDR             W8, [SP,#-0x10+arg_48]\n  0x7978:  LSL             W9, W8, #0x12\n  0x797C:  LDP             W11, W10, [SP,#-0x10+arg_38+4]\n  0x7980:  BFI             W9, W10, #9, #9\n  0x7984:  BFXIL           W9, W11, #0, #9\n  0x7988:  AND             W8, W8, #0x7FFF\n  0x798C:  LSL             X8, X8, #0x14\n  0x7990:  LSL             W10, W10, #0xA\n  0x7994:  BFXIL           X8, X10, #0, #0x14\n  0x7998:  BFXIL           X8, X11, #0, #0xA\n  0x799C:  LDR             W10, [SP,#-0x10+arg_38]\n  0x79A0:  LSL             W10, W10, #0xA\n  0x79A4:  AND             X10, X10, #0xFFC00\n  0x79A8:  BFI             X10, X8, #0x14, #0x23 ; '#'\n  0x79AC:  LDR             W8, [SP,#-0x10+arg_34]\n  0x79B0:  BFXIL           X10, X8, #0, #0xA\n  0x79B4:  STR             W9, [X19,#0xC8]\n  0x79B8:  STR             X10, [X19,#0xD0]\n  0x79BC:  ADD             X0, SP, #-0x10+__big\n  0x79C0:  BL              sub_7638\n  0x79C4:  CBNZ            W0, loc_78BC\n  0x79C8:  LDRB            W8, [SP,#-0x10+__big]\n  0x79CC:  STRB            W8, [X19,#0x5C0]\n  0x79D0:  ADD             X0, SP, #-0x10+arg_48\n  0x79D4:  BL              sub_7524\n  0x79D8:  CBNZ            W0, loc_78BC\n  0x79DC:  MOV             W9, #0\n  0x79E0:  LDRB            W8, [SP,#-0x10+arg_48]\n  0x79E4:  STRB            W8, [X19,#0x5C1]\n  0x79E8:  MOV             W10, #0x100000C\n  0x79F0:  CMP             W22, W10\n  0x79F4:  B.NE            loc_7A3C\n  0x79F8:  CMP             W21, #2\n  0x79FC:  B.CC            loc_7A3C\n  0x7A00:  UBFX            W9, W23, #0x10, #8\n  0x7A04:  CMP             W9, #0xC\n  0x7A08:  B.LS            loc_7A2C\n  0x7A0C:  MOV             W9, #1\n  0x7A10:  B               loc_7A3C\n  0x7A14:  MOV             W0, #0xFFFFFFFD\n  0x7A18:  B               loc_78BC\n  0x7A1C:  MOV             W0, #0xFFFFFFFC\n  0x7A20:  B               loc_78BC\n  0x7A24:  MOV             W0, #0xFFFFFFFB\n  0x7A28:  B               loc_78BC\n  0x7A2C:  CSET            W9, EQ\n  0x7A30:  TST             W23, #0xFF00\n  0x7A34:  CSET            W10, NE\n  0x7A38:  AND             W9, W9, W10\n  0x7A3C:  STRB            W9, [X19,#0x5C3]\n  0x7A40:  CBZ             W8, loc_7A88\n  0x7A44:  LDR             W8, [X19,#0xC0]\n  0x7A48:  LSR             W8, W8, #0xA\n  0x7A4C:  CMP             W8, #0x3C1\n  0x7A50:  B.CC            loc_7A88\n  0x7A54:  LDR             W8, [X19,#0xE0]\n  0x7A58:  MOV             W9, #0x8765EDEA\n  0x7A60:  CMP             W8, W9\n  0x7A64:  B.EQ            loc_7A8C\n  0x7A68:  MOV             W9, #0xDA33D83D\n  0x7A70:  CMP             W8, W9\n  0x7A74:  B.EQ            loc_7A8C\n  0x7A78:  MOV             W9, #0x2876F5B5\n  0x7A80:  CMP             W8, W9\n  0x7A84:  B.EQ            loc_7A8C\n  0x7A88:  MOV             W20, #0\n  0x7A8C:  MOV             W0, #0\n  0x7A90:  STRB            W20, [X19,#0x5E9]\n  0x7A94:  B               loc_78BC"
+    },
+    {
+      "address": "0x7A98",
+      "name": "sub_7A98",
+      "size": 264,
+      "calls": [
+        "_strlen",
+        "_CFURLCreateFromFileSystemRepresentation",
+        "_CFReadStreamCreateWithFile",
+        "_CFReadStreamOpen",
+        "_CFPropertyListCreateWithStream",
+        "_CFRelease",
+        "_CFReadStreamClose",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x70B8 (sub_7090)",
+        "0x70CC (sub_7090)"
+      ],
+      "string_refs": [],
+      "pseudocode": "CFPropertyListRef __fastcall sub_7A98(const char *a1)\n{\n  size_t v2; // x0\n  const __CFURL *v3; // x0\n  const __CFURL *v4; // x19\n  __CFReadStream *v5; // x0\n  __CFReadStream *v6; // x20\n  CFPropertyListRef v7; // x21\n  bool v8; // zf\n  CFErrorRef error; // [xsp+8h] [xbp-28h] BYREF\n\n  error = 0;\n  v2 = strlen(a1);\n  v3 = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8 *)a1, v2, 0);\n  if ( !v3 )\n    return 0;\n  v4 = v3;\n  v5 = CFReadStreamCreateWithFile(kCFAllocatorDefault, v3);\n  if ( v5 )\n  {\n    v6 = v5;\n    if ( CFReadStreamOpen(v5) )\n    {\n      v7 = CFPropertyListCreateWithStream(kCFAllocatorDefault, v6, 0, 0, 0, &error);\n      if ( v7 )\n        v8 = 1;\n      else\n        v8 = error == 0;\n      if ( !v8 )\n        CFRelease(error);\n      CFReadStreamClose(v6);\n    }\n    else\n    {\n      v7 = 0;\n    }\n    CFRelease(v4);\n  }\n  else\n  {\n    v7 = 0;\n    v6 = v4;\n  }\n  CFRelease(v6);\n  return v7;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7BA0",
+      "name": "sub_7BA0",
+      "size": 8,
+      "calls": [],
+      "called_by": [
+        "0x7B9C (sub_7A98)",
+        "0x5D8C (sub_5D68)"
+      ],
+      "string_refs": [],
+      "pseudocode": "void sub_7BA0()\n{\n  ;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7BA8",
+      "name": "sub_7BA8",
+      "size": 8,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void sub_7BA8()\n{\n  ;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7BB0",
+      "name": "sub_7BB0",
+      "size": 8,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void sub_7BB0()\n{\n  ;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7BB8",
+      "name": "sub_7BB8",
+      "size": 8,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void sub_7BB8()\n{\n  ;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7BC0",
+      "name": "sub_7BC0",
+      "size": 44,
+      "calls": [],
+      "called_by": [
+        "0x5CF4 (sub_5CEC)",
+        "0x5D7C (sub_5D68)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 sub_7BC0()\n{\n  return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7BEC",
+      "name": "sub_7BEC",
+      "size": 36,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void __fastcall sub_7BEC(__int64 a1)\n{\n  __asm { BR              X0 }\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7C10",
+      "name": "sub_7C10",
+      "size": 32,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void __fastcall sub_7C10(__int64 a1, int a2, __int64 a3, __int64 a4)\n{\n  _BYTE v4[32]; // [xsp+0h] [xbp-30h]\n\n  *(_DWORD *)&v4[a4] = a2;\n  __asm { BR              X0 }\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7C30",
+      "name": "sub_7C30",
+      "size": 32,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void __fastcall sub_7C30(__int64 a1, int a2, __int64 a3, __int64 a4)\n{\n  _BYTE v4[48]; // [xsp+0h] [xbp-40h]\n\n  *(_DWORD *)&v4[a4] = a2;\n  __asm { BR              X0 }\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7C50",
+      "name": "sub_7C50",
+      "size": 40,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void __fastcall sub_7C50(__int64 a1, int a2, __int64 a3, __int64 a4)\n{\n  _BYTE v4[16]; // [xsp+0h] [xbp-40h]\n\n  *(_DWORD *)&v4[a4] = a2;\n  __asm { BR              X0 }\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7C78",
+      "name": "sub_7C78",
+      "size": 36,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void __fastcall sub_7C78(__int64 a1, int a2, __int64 a3, __int64 a4)\n{\n  _BYTE v4[32]; // [xsp+0h] [xbp-40h]\n\n  *(_DWORD *)&v4[a4] = a2;\n  __asm { BR              X0 }\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7C9C",
+      "name": "sub_7C9C",
+      "size": 372,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x8230 (sub_8210)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_7C9C(__int64 a1, int a2, _DWORD *a3, unsigned int a4)\n{\n  __int64 v4; // x8\n  __int64 v6; // x9\n  __int64 v7; // x10\n  unsigned __int64 v8; // x13\n  __int64 v10; // d1\n  int v11; // w8\n  __int64 v12; // x15\n  int v13; // w13\n  __int64 v14; // x14\n  char *v15; // x14\n  __int64 v16; // x16\n  int v17; // w17\n  __int64 v19; // x8\n  __int64 v20; // x9\n  int v21; // w10\n\n  v4 = 708609;\n  if ( a1 && a3 && a4 )\n  {\n    if ( a4 < 4 )\n      return 28676;\n    if ( *a3 == -267534609 )\n    {\n      if ( a4 < 9 )\n        return 28676;\n      v6 = (unsigned int)a3[1];\n      if ( (int)v6 < 1 )\n      {\n        return 0;\n      }\n      else\n      {\n        v7 = 0;\n        while ( 1 )\n        {\n          v8 = (unsigned __int64)&a3[4 * v7 + 2];\n          if ( v8 < (unsigned __int64)a3 || (unsigned __int64)a3 + a4 <= v8 )\n            break;\n          v10 = *(_QWORD *)v8;\n          v11 = *(_QWORD *)v8;\n          if ( !v11 )\n            return 28684;\n          v12 = 0;\n          v14 = *(unsigned int *)(v8 + 8);\n          v13 = *(_DWORD *)(v8 + 12);\n          v15 = (char *)a3 + v14;\n          while ( 1 )\n          {\n            v16 = a1 + v12;\n            v17 = *(_DWORD *)(a1 + v12 + 320);\n            if ( !v17 || v17 == v11 )\n              break;\n            v12 += 48;\n            if ( v12 == 1152 )\n              return 708617;\n          }\n          v4 = 0;\n          *(_OWORD *)(v16 + 320) = 0u;\n          *(_OWORD *)(v16 + 336) = 0u;\n          *(_OWORD *)(v16 + 352) = 0u;\n          *(_QWORD *)(v16 + 320) = v10;\n          *(_QWORD *)(v16 + 328) = v15;\n          ++v7;\n          *(_DWORD *)(v16 + 336) = v13;\n          if ( v7 == v6 )\n            return v4;\n        }\n        return 28677;\n      }\n    }\n    else if ( a2 )\n    {\n      v19 = 0;\n      while ( 1 )\n      {\n        v20 = a1 + v19;\n        v21 = *(_DWORD *)(a1 + v19 + 320);\n        if ( !v21 || v21 == a2 )\n          break;\n        v19 += 48;\n        if ( v19 == 1152 )\n          return 708617;\n      }\n      v4 = 0;\n      *(_OWORD *)(v20 + 320) = 0u;\n      *(_OWORD *)(v20 + 336) = 0u;\n      *(_OWORD *)(v20 + 352) = 0u;\n      *(_DWORD *)(v20 + 320) = a2;\n      *(_DWORD *)(v20 + 324) = 1;\n      *(_QWORD *)(v20 + 328) = a3;\n      *(_DWORD *)(v20 + 336) = a4;\n    }\n    else\n    {\n      return 28684;\n    }\n  }\n  return v4;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7E10",
+      "name": "sub_7E10",
+      "size": 196,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x8238 (sub_8210)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_7E10(__int64 a1)\n{\n  __int64 i; // x20\n  __int64 v3; // x21\n  __int64 result; // x0\n  __int64 v5; // x10\n\n  for ( i = 0; i != 1152; i += 48 )\n  {\n    if ( *(_DWORD *)(a1 + i + 320) )\n    {\n      if ( *(_DWORD *)(a1 + i + 324) )\n      {\n        v3 = a1 + i;\n        if ( !*(_QWORD *)(a1 + i + 360) )\n        {\n          result = sub_B0FC(a1, *(_QWORD *)(v3 + 328), *(unsigned int *)(v3 + 336));\n          if ( (_DWORD)result )\n            return result;\n          *(_QWORD *)(v3 + 360) = 0;\n          v5 = a1 + i;\n          *(_QWORD *)(v5 + 344) = 0x500000005LL;\n          *(_DWORD *)(v5 + 352) = -2147482624;\n        }\n      }\n    }\n  }\n  return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7ED4",
+      "name": "sub_7ED4",
+      "size": 244,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x7ED0 (sub_7E10)",
+        "0x80E4 (sub_8080)",
+        "0x8240 (sub_8210)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_7ED4(__int64 a1, int a2)\n{\n  __int64 result; // x0\n  __int64 v5; // x20\n  __int64 v6; // x21\n  __int64 v7; // x1\n  __int64 v8; // x2\n  __int64 v9; // x10\n\n  result = 708609;\n  if ( a1 )\n  {\n    if ( *(_QWORD *)(a1 + 48) && a2 != 0 )\n    {\n      v5 = 0;\n      while ( 1 )\n      {\n        v6 = a1 + v5;\n        if ( *(_DWORD *)(a1 + v5 + 320) == a2 )\n          break;\n        v5 += 48;\n        if ( v5 == 1152 )\n          return 28675;\n      }\n      if ( *(_QWORD *)(v6 + 360) )\n      {\n        return 28673;\n      }\n      else\n      {\n        v7 = *(_QWORD *)(a1 + v5 + 328);\n        if ( v7 && (v8 = *(unsigned int *)(a1 + v5 + 336), (_DWORD)v8) )\n        {\n          result = sub_B0FC(a1, v7, v8);\n          if ( !(_DWORD)result )\n          {\n            *(_QWORD *)(v6 + 360) = 0;\n            v9 = a1 + v5;\n            *(_QWORD *)(v9 + 344) = 0x500000005LL;\n            *(_DWORD *)(v9 + 352) = -2147482624;\n          }\n        }\n        else\n        {\n          return 28674;\n        }\n      }\n    }\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x7FC8",
+      "name": "sub_7FC8",
+      "size": 184,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x7FC4 (sub_7ED4)",
+        "0x824C (sub_8210)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_7FC8(__int64 a1, int a2, __int64 a3)\n{\n  __int64 result; // x0\n  __int64 v6; // x20\n  __int64 v7; // x21\n  __int64 v8; // x1\n  __int64 v9; // x8\n\n  result = 708609;\n  if ( a1 )\n  {\n    if ( *(_QWORD *)(a1 + 304) && a2 != 0 )\n    {\n      v6 = 0;\n      while ( 1 )\n      {\n        v7 = a1 + v6;\n        if ( *(_DWORD *)(a1 + v6 + 320) == a2 )\n          break;\n        v6 += 48;\n        if ( v6 == 1152 )\n          return 28675;\n      }\n      v8 = *(_QWORD *)(v7 + 360);\n      if ( !v8 || (result = sub_B0FC(a1, v8, a3), !(_DWORD)result) )\n      {\n        *(_QWORD *)(v7 + 360) = 0;\n        v9 = a1 + v6;\n        *(_QWORD *)(v9 + 344) = 0;\n        *(_DWORD *)(v9 + 352) = 0;\n        return 0;\n      }\n    }\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8080",
+      "name": "sub_8080",
+      "size": 172,
+      "calls": [
+        "sub_7ED4",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x807C (sub_7FC8)",
+        "0x8260 (sub_8210)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_8080(__int64 a1, int a2, _QWORD *a3)\n{\n  __int64 v3; // x8\n  __int64 v5; // x8\n  __int64 v6; // x20\n  __int64 v7; // x9\n\n  v3 = 708609;\n  if ( a1 )\n  {\n    if ( a3 )\n    {\n      *a3 = 0;\n      if ( a2 )\n      {\n        v5 = 0;\n        while ( 1 )\n        {\n          v6 = a1 + v5;\n          if ( *(_DWORD *)(a1 + v5 + 320) == a2 )\n            break;\n          v5 += 48;\n          if ( v5 == 1152 )\n            return 28675;\n        }\n        v7 = *(_QWORD *)(v6 + 360);\n        if ( !v7 )\n        {\n          v3 = sub_7ED4(a1, a2);\n          if ( (_DWORD)v3 )\n            return v3;\n          v7 = *(_QWORD *)(v6 + 360);\n        }\n        v3 = 0;\n        *a3 = v7;\n      }\n    }\n  }\n  return v3;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x812C",
+      "name": "sub_812C",
+      "size": 228,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x8254 (sub_8210)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_812C(__int64 a1, int a2, _QWORD *a3, _DWORD *a4)\n{\n  __int64 result; // x0\n  __int64 v6; // x9\n  __int64 v7; // x10\n  int v8; // w8\n\n  result = 708609;\n  if ( a1 )\n  {\n    if ( a3 )\n    {\n      if ( a4 )\n      {\n        *a3 = 0;\n        *a4 = 0;\n        if ( a2 )\n        {\n          v6 = 0;\n          while ( *(_DWORD *)(a1 + v6 + 320) != a2 )\n          {\n            v6 += 48;\n            if ( v6 == 1152 )\n              return 28675;\n          }\n          v7 = *(_QWORD *)(a1 + v6 + 328);\n          if ( v7 && (v8 = *(_DWORD *)(a1 + v6 + 336)) != 0 )\n          {\n            result = 0;\n            *a3 = v7;\n            *a4 = v8;\n          }\n          else\n          {\n            return 28674;\n          }\n        }\n      }\n    }\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8210",
+      "name": "sub_8210",
+      "size": 136,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x820C (sub_812C)",
+        "0x6908 (_process)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_8210(_QWORD *a1)\n{\n  __int64 i; // x8\n  _OWORD *v2; // x9\n\n  for ( i = 40; i != 184; i += 6 )\n  {\n    v2 = &a1[i];\n    v2[1] = 0u;\n    v2[2] = 0u;\n    *v2 = 0u;\n  }\n  a1[29] = sub_7C9C;\n  a1[30] = sub_7E10;\n  a1[31] = sub_7ED4;\n  a1[32] = sub_7FC8;\n  a1[33] = sub_8080;\n  a1[34] = sub_812C;\n  return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8298",
+      "name": "sub_8298",
+      "size": 408,
+      "calls": [
+        "sub_B0FC",
+        "_getpid",
+        "_proc_pidinfo",
+        "_vm_region_64"
+      ],
+      "called_by": [
+        "0x8294 (sub_8210)",
+        "0x6B44 (_process)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_8298(__int64 a1)\n{\n  __int64 result; // x0\n  pid_t v3; // w0\n  vm_address_t v4; // x8\n  kern_return_t v5; // w0\n  vm_size_t v6; // x8\n  vm_size_t v7; // x9\n  vm_address_t v8; // x10\n  int v9; // w9\n  vm_size_t v10; // x8\n  mach_port_t object_name; // [xsp+8h] [xbp-88h] BYREF\n  mach_msg_type_number_t infoCnt; // [xsp+Ch] [xbp-84h] BYREF\n  int buffer[20]; // [xsp+10h] [xbp-80h] BYREF\n  vm_address_t v14; // [xsp+60h] [xbp-30h]\n  vm_size_t v15; // [xsp+68h] [xbp-28h]\n  vm_size_t size; // [xsp+70h] [xbp-20h] BYREF\n  vm_address_t address; // [xsp+78h] [xbp-18h] BYREF\n\n  if ( *(_BYTE *)(a1 + 1474) || *(_BYTE *)(a1 + 1477) || *(_BYTE *)(a1 + 1479) )\n  {\nLABEL_4:\n    *(_QWORD *)(a1 + 288) = sub_5DC8;\n    if ( *(_BYTE *)(a1 + 1477) || *(_BYTE *)(a1 + 1479) )\n      return 0;\n    *(_DWORD *)(a1 + 80) = 0;\n    return 0;\n  }\n  if ( *(_DWORD *)(a1 + 192) < 0xF0000u )\n  {\n    v4 = *(_QWORD *)(a1 + 72);\n    size = 0;\n    address = v4;\n    infoCnt = 9;\n    v5 = vm_region_64(mach_task_self_, &address, &size, 9, buffer, &infoCnt, &object_name);\n    if ( v5 )\n      return v5 | 0x80000000;\n  }\n  else\n  {\n    v3 = getpid();\n    if ( proc_pidinfo(v3, 7, *(_QWORD *)(a1 + 72), buffer, 96) <= 0 )\n      return 2147483653LL;\n    size = v15;\n    address = v14;\n  }\n  if ( !*(_QWORD *)(a1 + 1496) && buffer[0] != 7 )\n    return 49153;\n  result = 49155;\n  if ( address )\n  {\n    v6 = size;\n    if ( size )\n    {\n      v7 = size >> 1;\n      size >>= 1;\n      v8 = address + (v6 >> 1);\n      if ( v6 >> 1 < *(unsigned int *)(v8 - 4) )\n        return 49155;\n      *(_QWORD *)(a1 + 312) = v8 - 4;\n      *(_QWORD *)(a1 + 136) = v8;\n      v9 = v7 - 0x100000;\n      v10 = v6 >> 2;\n      if ( !*(_BYTE *)(a1 + 1475) )\n        LODWORD(v10) = v9;\n      *(_DWORD *)(a1 + 144) = v10;\n      *(_QWORD *)(a1 + 296) = sub_5E78;\n      goto LABEL_4;\n    }\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8430",
+      "name": "sub_8430",
+      "size": 352,
+      "calls": [
+        "_malloc",
+        "_memset_s",
+        "_compression_decode_buffer",
+        "_free",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x6114 (sub_5FEC)",
+        "0xACEC (sub_AC44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_8430(uint8_t **a1, _DWORD *a2)\n{\n  __int64 v2; // x19\n  uint8_t *v5; // x22\n  rsize_t v7; // x23\n  rsize_t v8; // x24\n  uint8_t *v9; // x0\n  uint8_t *v10; // x25\n\n  v2 = 708609;\n  if ( a1 )\n  {\n    v5 = *a1;\n    if ( *a1 && a2 != 0 )\n    {\n      v7 = (unsigned int)*a2;\n      if ( (_DWORD)v7 )\n      {\n        if ( (unsigned int)v7 >= 8\n          && *(_DWORD *)v5 == 200142861\n          && (v8 = *((unsigned int *)v5 + 1), (_DWORD)v8)\n          && (int)v7 - 8 < (unsigned int)v8 )\n        {\n          v9 = (uint8_t *)malloc(v8 + 1);\n          if ( v9 )\n          {\n            v10 = v9;\n            memset_s(v9, v8, 0, v8);\n            if ( compression_decode_buffer(v10, v8 + 1, v5 + 8, (unsigned int)(v7 - 8), 0, COMPRESSION_LZMA) == v8 )\n            {\n              memset_s(v5, v7, 0, v7);\n              free(v5);\n              v2 = 0;\n              *a1 = v10;\n              *a2 = v8;\n            }\n            else\n            {\n              memset_s(v10, v8, 0, v8);\n              free(v10);\n              return 708619;\n            }\n          }\n          else\n          {\n            return 708617;\n          }\n        }\n        else\n        {\n          return 0;\n        }\n      }\n    }\n  }\n  return v2;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8590",
+      "name": "sub_8590",
+      "size": 520,
+      "calls": [
+        "sub_B0FC",
+        "_malloc",
+        "_free",
+        "sub_5D2C"
+      ],
+      "called_by": [
+        "0x6648 (sub_5FEC)",
+        "0x87A8 (sub_8798)"
+      ],
+      "string_refs": [
+        "_driver"
+      ],
+      "pseudocode": "__int64 __fastcall sub_8590(__int64 a1, __int64 a2, _QWORD *a3)\n{\n  __int64 v5; // x22\n  _QWORD *v6; // x0\n  _QWORD *v7; // x20\n  __int64 v8; // x2\n  __int64 v9; // x1\n  __int64 v10; // x1\n  _WORD **v11; // x23\n  _WORD *v13; // x8\n  __int64 v14; // x0\n  __int64 v15; // x0\n  __int64 v16; // x0\n  __int64 v17; // x0\n  __int64 v18; // x0\n  __int64 v19; // x0\n  __int64 v20; // x0\n  __int64 v21; // x0\n  __int64 v22; // [xsp+10h] [xbp-40h] BYREF\n  __int64 v23; // [xsp+18h] [xbp-38h]\n\n  v22 = 0;\n  v23 = 0;\n  v5 = sub_B0FC(a1, a2, &v22);\n  if ( !(_DWORD)v5 )\n  {\n    v6 = malloc(0x10u);\n    if ( v6 )\n    {\n      v7 = v6;\n      v5 = sub_B0FC(a1, v22, 0);\n      if ( (_DWORD)v5 )\n        goto LABEL_20;\n      if ( *(_QWORD *)(a1 + 288) )\n        sub_B0FC(a1, *(_QWORD *)(v23 + 88), *(unsigned int *)(v23 + 168));\n      v9 = v23;\n      *v7 = v23;\n      v5 = sub_B0FC(a1, v9, \"_driver\");\n      if ( (_DWORD)v5\n        || (v11 = (_WORD **)(v7 + 1), v5 = sub_B0FC(v7 + 1, v10, v8), (_DWORD)v5)\n        || (v5 = 163847, (v13 = *v11) == 0)\n        || *v13 != 2\n        || (unsigned __int16)v13[1] < 2u )\n      {\nLABEL_20:\n        if ( v23 && *(_QWORD *)(a1 + 304) )\n          sub_B0FC(a1, v23, v8);\n        free(v7);\n      }\n      else\n      {\n        sub_5D2C();\n        *(_QWORD *)(v7[1] + 16LL) = v14;\n        sub_5D2C();\n        *(_QWORD *)(v7[1] + 24LL) = v15;\n        sub_5D2C();\n        *(_QWORD *)(v7[1] + 32LL) = v16;\n        sub_5D2C();\n        *(_QWORD *)(v7[1] + 40LL) = v17;\n        sub_5D2C();\n        *(_QWORD *)(v7[1] + 48LL) = v18;\n        sub_5D2C();\n        *(_QWORD *)(v7[1] + 56LL) = v19;\n        sub_5D2C();\n        *(_QWORD *)(v7[1] + 64LL) = v20;\n        sub_5D2C();\n        v5 = 0;\n        *(_QWORD *)(v7[1] + 72LL) = v21;\n        *a3 = v7;\n      }\n    }\n    else\n    {\n      return 708617;\n    }\n  }\n  return v5;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8798",
+      "name": "sub_8798",
+      "size": 64,
+      "calls": [
+        "sub_8590",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x64B4 (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_8798(__int64 a1, _QWORD *a2)\n{\n  return sub_8590(a1, 589824, a2);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x87D8",
+      "name": "sub_87D8",
+      "size": 104,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x87D4 (sub_8798)",
+        "0x64CC (sub_5FEC)",
+        "0x665C (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_87D8(__int64 a1, __int64 a2, __int64 a3)\n{\n  __int64 result; // x0\n  __int64 v5; // x0\n\n  result = 708609;\n  if ( a1 && a3 )\n  {\n    v5 = *(_QWORD *)(a1 + 8);\n    if ( v5 )\n      return sub_B0FC(v5, a2, a3);\n    else\n      return 163846;\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8840",
+      "name": "sub_8840",
+      "size": 116,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x883C (sub_87D8)",
+        "0x64E8 (sub_5FEC)",
+        "0x6688 (sub_5FEC)",
+        "0x66B8 (sub_5FEC)",
+        "0x66CC (sub_5FEC)",
+        "0x68B4 (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_8840(__int64 a1, __int64 a2, __int64 a3)\n{\n  __int64 result; // x0\n  __int64 v5; // x8\n\n  if ( !a1 )\n    return 708609;\n  result = 163842;\n  if ( a2 )\n  {\n    v5 = *(_QWORD *)(a1 + 8);\n    if ( v5 )\n      return sub_B0FC(v5, a2, a3);\n    else\n      return 163846;\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x88B4",
+      "name": "sub_88B4",
+      "size": 116,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x88B0 (sub_8840)",
+        "0x64F8 (sub_5FEC)",
+        "0x66F4 (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_88B4(__int64 a1, __int64 a2, __int64 a3)\n{\n  __int64 result; // x0\n  __int64 v5; // x8\n\n  if ( !a1 )\n    return 708609;\n  result = 163842;\n  if ( a2 )\n  {\n    v5 = *(_QWORD *)(a1 + 8);\n    if ( v5 )\n      return sub_B0FC(v5, a2, a3);\n    else\n      return 163846;\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8928",
+      "name": "sub_8928",
+      "size": 164,
+      "calls": [
+        "sub_B0FC",
+        "_free"
+      ],
+      "called_by": [
+        "0x8924 (sub_88B4)",
+        "0x6504 (sub_5FEC)",
+        "0x6700 (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_8928(__int64 a1, _QWORD *a2, __int64 a3)\n{\n  __int64 v3; // x20\n  __int64 v6; // x0\n  __int64 v7; // x2\n\n  v3 = 708609;\n  if ( a1 && a2 )\n  {\n    v6 = a2[1];\n    if ( v6 )\n    {\n      sub_B0FC(v6, a2, a3);\n      v3 = sub_B0FC(a1, *a2, v7);\n      *a2 = 0;\n      a2[1] = 0;\n      free(a2);\n    }\n    else\n    {\n      return 163846;\n    }\n  }\n  return v3;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x89CC",
+      "name": "sub_89CC",
+      "size": 236,
+      "calls": [
+        "sub_9B60",
+        "_getpid",
+        "_sandbox_check",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x89C8 (sub_8928)",
+        "0x8AD8 (sub_8AB8)"
+      ],
+      "string_refs": [
+        "IOSurfaceRoot",
+        "iokit-open-service"
+      ],
+      "pseudocode": "__int64 __fastcall sub_89CC(__int64 a1, bool *a2)\n{\n  __int64 result; // x0\n  unsigned int v5; // w8\n  __int64 v6; // x0\n  __int64 v7; // x2\n  const char *v8; // x1\n  bool v9; // w8\n\n  result = 708609;\n  if ( a1 && a2 )\n  {\n    if ( (sub_9B60(a1) & 1) == 0 )\n    {\n      v5 = *(_DWORD *)(a1 + 192);\n      if ( v5 > 0x100500 || v5 - 984839 <= 0xF8F8 )\n      {\n        v6 = getpid();\n        v8 = 0;\n        v7 = 0;\n        goto LABEL_10;\n      }\n      if ( v5 >= 0x100000 )\n      {\n        v6 = getpid();\n        v7 = SANDBOX_CHECK_NO_REPORT;\n        v8 = \"iokit-open-service\";\nLABEL_10:\n        v9 = (int)sandbox_check(v6, v8, v7) > 0;\n        goto LABEL_11;\n      }\n    }\n    v9 = 0;\nLABEL_11:\n    *a2 = v9;\n    return 0;\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8AB8",
+      "name": "sub_8AB8",
+      "size": 164,
+      "calls": [
+        "sub_89CC",
+        "_strncasecmp",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x8AB4 (sub_89CC)",
+        "0x6920 (_process)"
+      ],
+      "string_refs": [
+        "MobileStore/1.0"
+      ],
+      "pseudocode": "__int64 __fastcall sub_8AB8(__int64 a1)\n{\n  __int64 v2; // x20\n  const char *v3; // x1\n  bool v4; // w8\n  bool v6; // [xsp+Fh] [xbp-11h] BYREF\n\n  if ( !a1 )\n    return 708609;\n  v6 = 0;\n  v2 = sub_89CC(a1, &v6);\n  if ( !(_DWORD)v2 )\n  {\n    *(_BYTE *)(a1 + 1512) = v6;\n    v3 = *(const char **)(a1 + 160);\n    if ( v3 )\n      v4 = strncasecmp(\"MobileStore/1.0\", v3, 0xFu) == 0;\n    else\n      v4 = 0;\n    *(_BYTE *)(a1 + 1516) = v4;\n  }\n  return v2;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x8B5C",
+      "name": "sub_8B5C",
+      "size": 1956,
+      "calls": [
+        "_CFStringCreateWithCString",
+        "_CFStringGetLength",
+        "_strlen",
+        "_CFDataCreate",
+        "_CFRelease",
+        "_CFURLCreateWithString",
+        "_CFURLCopyScheme",
+        "_CFHTTPMessageCreateRequest",
+        "_CFHTTPMessageSetBody",
+        "_CFHTTPMessageSetHeaderFieldValue",
+        "_CFReadStreamCreateForHTTPRequest",
+        "_CFEqual",
+        "_CFDictionaryCreate",
+        "_CFReadStreamSetProperty",
+        "_SCDynamicStoreCopyProxies",
+        "_CFHTTPMessageCreateEmpty",
+        "_calloc",
+        "sub_5D2C",
+        "sub_5D68",
+        "_CFReadStreamSetClient",
+        "_CFRunLoopGetCurrent",
+        "_CFReadStreamScheduleWithRunLoop",
+        "_CFReadStreamOpen",
+        "_CFRunLoopRunInMode",
+        "_CFReadStreamClose",
+        "_free",
+        "_CFHTTPMessageCopyBody",
+        "_CFDataGetLength",
+        "_CFDataGetBytePtr",
+        "_malloc",
+        "_memcpy",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x8B58 (sub_8AB8)",
+        "0x9368 (sub_9300)",
+        "0x9458 (sub_9398)"
+      ],
+      "string_refs": [
+        "POST",
+        "GET",
+        "User-Agent",
+        "Content-Type",
+        "https"
+      ],
+      "pseudocode": "__int64 __fastcall sub_8B5C(\n        char *cStr,\n        const char *a2,\n        const char *a3,\n        const char *a4,\n        unsigned __int64 a5,\n        unsigned __int64 a6)\n{\n  _BOOL4 v6; // w8\n  _BOOL4 v7; // w9\n  __int64 v8; // x20\n  int v10; // w19\n  const __CFString *v15; // x0\n  const __CFString *v16; // x27\n  const __CFString *v17; // x0\n  const __CFString *v18; // x0\n  const __CFString *v19; // x21\n  size_t v20; // x0\n  CFDataRef v21; // x0\n  const __CFString *v22; // x19\n  unsigned int v23; // w26\n  CFDataRef *v24; // x11\n  const char *v25; // x8\n  const __CFURL *v26; // x0\n  const void *v27; // x28\n  const __CFString *v28; // x24\n  CFStringRef v29; // x0\n  CFStringRef v30; // x27\n  const __CFString *v31; // x21\n  __CFHTTPMessage *Request; // x0\n  __CFHTTPMessage *v33; // x20\n  const __CFString *v34; // x0\n  const __CFString *v35; // x0\n  CFReadStreamRef v36; // x0\n  CFStringRef v37; // x0\n  CFDictionaryRef v38; // x0\n  CFDictionaryRef v39; // x20\n  CFDictionaryRef v40; // x0\n  CFDictionaryRef v41; // x20\n  CFHTTPMessageRef Empty; // x0\n  CFHTTPMessageRef v43; // x20\n  CFHTTPMessageRef *v44; // x0\n  __int64 v45; // x0\n  void (__cdecl *v46)(CFReadStreamRef, CFStreamEventType, void *); // x0\n  __CFRunLoop *Current; // x0\n  CFHTTPMessageRef *v48; // x0\n  CFDataRef v49; // x0\n  const __CFData *v50; // x20\n  unsigned int Length; // w21\n  const UInt8 *BytePtr; // x0\n  const UInt8 *v53; // x20\n  void *v54; // x0\n  void *v55; // x25\n  CFHTTPMessageRef *v57; // [xsp+0h] [xbp-140h]\n  CFHTTPMessageRef cf; // [xsp+8h] [xbp-138h]\n  char v59; // [xsp+34h] [xbp-10Ch]\n  __CFReadStream *stream; // [xsp+48h] [xbp-F8h]\n  const __CFData *bodyData; // [xsp+50h] [xbp-F0h]\n  const __CFString *v62; // [xsp+58h] [xbp-E8h]\n  const __CFString *value; // [xsp+68h] [xbp-D8h]\n  int v64; // [xsp+70h] [xbp-D0h]\n  int v65; // [xsp+70h] [xbp-D0h]\n  CFDataRef v66; // [xsp+70h] [xbp-D0h]\n  CFStringRef v67; // [xsp+78h] [xbp-C8h]\n  const __CFString *v68; // [xsp+80h] [xbp-C0h]\n  const __CFString *v69; // [xsp+88h] [xbp-B8h]\n  __CFHTTPMessage *v70; // [xsp+90h] [xbp-B0h]\n  char *cStra; // [xsp+98h] [xbp-A8h]\n  CFDataRef *v72; // [xsp+A0h] [xbp-A0h]\n  CFDataRef v73; // [xsp+A8h] [xbp-98h] BYREF\n  CFStreamClientContext keys; // [xsp+B0h] [xbp-90h] BYREF\n  void *values; // [xsp+E0h] [xbp-60h] BYREF\n\n  v73 = 0;\n  v6 = a5 != 0;\n  v7 = a6 != 0;\n  v8 = 708609;\n  if ( !cStr )\n    return v8;\n  if ( !*cStr )\n    return v8;\n  v10 = v6 && v7;\n  if ( (!v6 || !v7) && (a5 | a6) != 0 )\n    return v8;\n  v15 = CFStringCreateWithCString(kCFAllocatorDefault, cStr, 0x8000100u);\n  if ( !v15 )\n  {\n    v8 = 12290;\n    goto LABEL_118;\n  }\n  v16 = v15;\n  if ( CFStringGetLength(v15) < 1 )\n  {\n    v8 = 12291;\n    goto LABEL_117;\n  }\n  if ( a2 )\n  {\n    v17 = CFStringCreateWithCString(kCFAllocatorDefault, a2, 0x8000100u);\n    if ( !v17 )\n    {\n      v8 = 12310;\n      goto LABEL_117;\n    }\n    a2 = (const char *)v17;\n    if ( CFStringGetLength(v17) <= 0 )\n    {\n      CFRelease(v16);\n      v19 = 0;\n      v22 = 0;\n      v8 = 12311;\n      goto LABEL_112;\n    }\n  }\n  if ( a3 )\n  {\n    v18 = CFStringCreateWithCString(kCFAllocatorDefault, a3, 0x8000100u);\n    if ( !v18 )\n    {\n      v22 = 0;\n      v19 = 0;\n      v8 = 12310;\n      goto LABEL_111;\n    }\n    v62 = v18;\n    if ( CFStringGetLength(v18) < 1 )\n    {\n      v19 = 0;\n      v8 = 12311;\nLABEL_20:\n      v22 = v62;\n      goto LABEL_111;\n    }\n  }\n  else\n  {\n    v62 = 0;\n  }\n  value = (const __CFString *)a2;\n  if ( a4 )\n  {\n    v20 = strlen(a4);\n    v21 = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)a4, v20);\n    if ( !v21 )\n    {\n      v19 = 0;\n      v8 = 12312;\n      goto LABEL_20;\n    }\n  }\n  else\n  {\n    v21 = 0;\n  }\n  v23 = 0;\n  if ( v10 )\n    v24 = &v73;\n  else\n    v24 = 0;\n  v25 = \"POST\";\n  v59 = v10 ^ 1;\n  bodyData = v21;\n  if ( !v21 )\n    v25 = \"GET\";\n  cStra = (char *)v25;\n  v72 = v24;\n  if ( v10 )\nLABEL_30:\n    *v72 = 0;\n  while ( 1 )\n  {\n    v26 = CFURLCreateWithString(kCFAllocatorDefault, v16, 0);\n    if ( v26 )\n      break;\n    if ( v23 >= 7 )\n    {\n      v8 = 12290;\n      goto LABEL_109;\n    }\nLABEL_50:\n    ++v23;\n    if ( v10 )\n      goto LABEL_30;\n  }\n  v27 = v26;\n  v28 = v16;\n  v29 = CFURLCopyScheme(v26);\n  if ( !v29 )\n  {\n    v8 = 12301;\nLABEL_46:\n    v16 = v28;\nLABEL_47:\n    CFRelease(v27);\n    goto LABEL_48;\n  }\n  v30 = v29;\n  v31 = CFStringCreateWithCString(kCFAllocatorDefault, cStra, 0x8000100u);\n  v8 = 708617;\n  if ( !v31 )\n  {\nLABEL_44:\n    CFRelease(v27);\n    CFRelease(v30);\n    if ( !v31 )\n    {\n      v16 = v28;\n      goto LABEL_48;\n    }\n    v27 = v31;\n    goto LABEL_46;\n  }\n  Request = CFHTTPMessageCreateRequest(kCFAllocatorDefault, v31, (CFURLRef)v27, kCFHTTPVersion1_1);\n  if ( !Request )\n  {\n    v8 = 12297;\n    goto LABEL_44;\n  }\n  v33 = Request;\n  if ( bodyData )\n    CFHTTPMessageSetBody(Request, bodyData);\n  v70 = v33;\n  if ( value )\n  {\n    v34 = CFStringCreateWithCString(kCFAllocatorDefault, \"User-Agent\", 0x8000100u);\n    if ( !v34 )\n    {\n      v66 = 0;\n      v69 = 0;\n      goto LABEL_78;\n    }\n    v69 = v34;\n    CFHTTPMessageSetHeaderFieldValue(v33, v34, value);\n  }\n  else\n  {\n    v69 = 0;\n  }\n  if ( v62 )\n  {\n    v35 = CFStringCreateWithCString(kCFAllocatorDefault, \"Content-Type\", 0x8000100u);\n    if ( v35 )\n    {\n      v68 = v35;\n      CFHTTPMessageSetHeaderFieldValue(v33, v35, v62);\n      goto LABEL_58;\n    }\n    v66 = 0;\nLABEL_78:\n    v67 = 0;\n    v68 = 0;\n    v8 = 708617;\n    goto LABEL_91;\n  }\n  v68 = 0;\nLABEL_58:\n  v36 = CFReadStreamCreateForHTTPRequest(kCFAllocatorDefault, v33);\n  if ( !v36 )\n  {\n    v66 = 0;\n    v67 = 0;\n    v8 = 12298;\n    goto LABEL_91;\n  }\n  stream = v36;\n  v37 = CFStringCreateWithCString(kCFAllocatorDefault, \"https\", 0x8000100u);\n  v67 = v37;\n  if ( v37 )\n  {\n    if ( CFEqual(v37, v30) )\n    {\n      keys.version = (CFIndex)kCFStreamSSLValidatesCertificateChain;\n      values = kCFBooleanFalse;\n      v38 = CFDictionaryCreate(kCFAllocatorDefault, (const void **)&keys, (const void **)&values, 1, 0, 0);\n      if ( !v38 )\n      {\n        v66 = 0;\n        v8 = 12303;\n        goto LABEL_90;\n      }\n      v39 = v38;\n      v64 = CFReadStreamSetProperty(stream, kCFStreamPropertySSLSettings, v38);\n      CFRelease(v39);\n      if ( !v64 )\n        goto LABEL_80;\n    }\n    v40 = SCDynamicStoreCopyProxies(0);\n    if ( !v40 )\n    {\n      v66 = 0;\n      v8 = 12302;\n      goto LABEL_90;\n    }\n    v41 = v40;\n    v65 = CFReadStreamSetProperty(stream, kCFStreamPropertyHTTPProxy, v40);\n    CFRelease(v41);\n    if ( v65 )\n    {\n      Empty = CFHTTPMessageCreateEmpty(kCFAllocatorDefault, 0);\n      if ( Empty )\n      {\n        v43 = Empty;\n        v44 = (CFHTTPMessageRef *)calloc(0x10u, 1u);\n        cf = v43;\n        if ( !v44 )\n        {\n          v66 = 0;\n          v8 = 708617;\nLABEL_89:\n          CFRelease(cf);\n          goto LABEL_90;\n        }\n        *v44 = v43;\n        *((_DWORD *)v44 + 3) = 500;\n        keys.version = 0;\n        memset(&keys.retain, 0, 24);\n        v57 = v44;\n        keys.info = v44;\n        sub_5D2C();\n        v46 = (void (__cdecl *)(CFReadStreamRef, CFStreamEventType, void *))sub_5D68(v45, 0);\n        if ( CFReadStreamSetClient(stream, 0x1Au, v46, &keys) )\n        {\n          Current = CFRunLoopGetCurrent();\n          CFReadStreamScheduleWithRunLoop(stream, Current, kCFRunLoopCommonModes);\n          if ( CFReadStreamOpen(stream) )\n          {\n            CFRunLoopRunInMode(kCFRunLoopDefaultMode, 240.0, 0);\n            CFReadStreamClose(stream);\n            v48 = v57;\n            v8 = *((unsigned int *)v57 + 2);\n            if ( (_DWORD)v8\n              || (*((_DWORD *)v57 + 3) <= 0x18Fu ? (v8 = 0) : (v8 = 12305), (*((_DWORD *)v57 + 3) > 0x18Fu) | v59 & 1) )\n            {\n              v66 = 0;\nLABEL_88:\n              free(v48);\n              goto LABEL_89;\n            }\n            v49 = CFHTTPMessageCopyBody(*v57);\n            if ( v49 )\n            {\n              v8 = 0;\n              v66 = v49;\n              *v72 = v49;\n            }\n            else\n            {\n              v66 = 0;\n              v8 = 12313;\n            }\n          }\n          else\n          {\n            v66 = 0;\n            v8 = 12299;\n          }\n        }\n        else\n        {\n          v66 = 0;\n          v8 = 12304;\n        }\n        v48 = v57;\n        goto LABEL_88;\n      }\n      v66 = 0;\n      v8 = 12297;\n    }\n    else\n    {\nLABEL_80:\n      v66 = 0;\n      v8 = 12300;\n    }\n  }\n  else\n  {\n    v66 = 0;\n    v8 = 708617;\n  }\nLABEL_90:\n  CFRelease(stream);\nLABEL_91:\n  CFRelease(v70);\n  CFRelease(v27);\n  CFRelease(v30);\n  CFRelease(v31);\n  if ( v69 )\n    CFRelease(v69);\n  v16 = v28;\n  if ( v68 )\n    CFRelease(v68);\n  if ( v67 )\n    CFRelease(v67);\n  v27 = v66;\n  if ( v66 && (_DWORD)v8 )\n    goto LABEL_47;\nLABEL_48:\n  if ( v23 <= 6 && (_DWORD)v8 )\n    goto LABEL_50;\n  if ( ((_DWORD)v8 != 0) | v59 & 1 )\n  {\nLABEL_109:\n    a2 = (const char *)value;\n    goto LABEL_110;\n  }\n  v50 = v73;\n  a2 = (const char *)value;\n  if ( !v73 )\n    goto LABEL_121;\n  Length = CFDataGetLength(v73);\n  if ( !Length )\n  {\n    v8 = 12292;\n    goto LABEL_110;\n  }\n  BytePtr = CFDataGetBytePtr(v50);\n  if ( !BytePtr )\n  {\nLABEL_121:\n    v8 = 12293;\n    goto LABEL_110;\n  }\n  v53 = BytePtr;\n  v54 = malloc(Length);\n  if ( v54 )\n  {\n    v55 = v54;\n    memcpy(v54, v53, Length);\n    v8 = 0;\n    *(_QWORD *)a5 = v55;\n    *(_DWORD *)a6 = Length;\n  }\n  else\n  {\n    v8 = 708617;\n  }\nLABEL_110:\n  v19 = (const __CFString *)bodyData;\n  v22 = v62;\nLABEL_111:\n  CFRelease(v16);\n  if ( a2 )\nLABEL_112:\n    CFRelease(a2);\n  if ( v22 )\n    CFRelease(v22);\n  if ( v19 )\n  {\n    v16 = v19;\nLABEL_117:\n    CFRelease(v16);\n  }\nLABEL_118:\n  if ( v73 )\n    CFRelease(v73);\n  return v8;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x9300",
+      "name": "sub_9300",
+      "size": 152,
+      "calls": [
+        "sub_987C",
+        "sub_8B5C",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x9704 (sub_96F8)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_9300(__int64 a1, char *cStr, unsigned __int64 a3, unsigned __int64 a4)\n{\n  __int64 result; // x0\n  bool v6; // zf\n\n  result = 708609;\n  if ( a1 && cStr )\n  {\n    if ( *cStr )\n      v6 = a3 == 0;\n    else\n      v6 = 1;\n    if ( !v6 && a4 != 0 )\n    {\n      if ( *(_QWORD *)(a1 + 1504) )\n        return sub_987C(a1);\n      else\n        return sub_8B5C(cStr, *(const char **)(a1 + 160), 0, 0, a3, a4);\n    }\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x9398",
+      "name": "sub_9398",
+      "size": 284,
+      "calls": [
+        "_strncmp",
+        "sub_94B4",
+        "sub_8B5C",
+        "_bzero",
+        "_free",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x9394 (sub_9300)",
+        "0x962C (sub_9580)"
+      ],
+      "string_refs": [
+        "http://",
+        "https://",
+        "application/json"
+      ],
+      "pseudocode": "__int64 __fastcall sub_9398(char *__s1, const char *a2, char a3)\n{\n  __int64 v6; // x21\n\n  if ( !__s1 || !*__s1 )\n    return 0;\n  if ( strncmp(__s1, \"http://\", 7u) && strncmp(__s1, \"https://\", 8u) )\n    return 708628;\n  v6 = sub_94B4(a3);\n  if ( !(_DWORD)v6 )\n  {\n    v6 = sub_8B5C(__s1, a2, \"application/json\", 0, 0, 0);\n    bzero(0, 0);\n    free(0);\n  }\n  return v6;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x94B4",
+      "name": "sub_94B4",
+      "size": 204,
+      "calls": [
+        "sub_9A34",
+        "_bzero",
+        "_free",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x94B0 (sub_9398)",
+        "0x9430 (sub_9398)",
+        "0x9688 (sub_9580)"
+      ],
+      "string_refs": [
+        "{\\\"e\\\":%u,\\\"f\\\":\\\"%s\\\",\\\"l\\\":%u}",
+        "{\\\"e\\\":%u,\\\"l\\\":%u}",
+        "{\"cmd\":\"logmsg\",\"args\":{\"msg\":\"%s\"}}"
+      ],
+      "pseudocode": "__int64 __fastcall sub_94B4(char a1, __int64 a2, __int64 a3, int a4, int a5, int a6, int a7, int a8)\n{\n  __int64 v10; // x0\n  int v11; // w3\n  int v12; // w4\n  int v13; // w5\n  int v14; // w6\n  int v15; // w7\n  __int64 v16; // x21\n  _DWORD v18[3]; // [xsp+24h] [xbp-2Ch] BYREF\n\n  memset(v18, 0, sizeof(v18));\n  if ( a2 )\n    v10 = sub_9A34((int)&v18[1], (int)v18, \"{\\\\\\\"e\\\\\\\":%u,\\\\\\\"f\\\\\\\":\\\\\\\"%s\\\\\\\",\\\\\\\"l\\\\\\\":%u}\", a4, a5, a6, a7, a8, a1);\n  else\n    v10 = sub_9A34((int)&v18[1], (int)v18, \"{\\\\\\\"e\\\\\\\":%u,\\\\\\\"l\\\\\\\":%u}\", a4, a5, a6, a7, a8, a1);\n  v16 = v10;\n  if ( !(_DWORD)v10 )\n  {\n    v16 = sub_9A34(a4, a5, \"{\\\"cmd\\\":\\\"logmsg\\\",\\\"args\\\":{\\\"msg\\\":\\\"%s\\\"}}\", v11, v12, v13, v14, v15, v18[1]);\n    bzero(*(void **)&v18[1], v18[0]);\n    free(*(void **)&v18[1]);\n  }\n  return v16;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x9580",
+      "name": "sub_9580",
+      "size": 376,
+      "calls": [
+        "_strncmp",
+        "sub_9398",
+        "sub_B0FC",
+        "sub_94B4",
+        "sub_987C",
+        "_bzero",
+        "_free"
+      ],
+      "called_by": [
+        "0x957C (sub_94B4)",
+        "0x9710 (sub_96F8)"
+      ],
+      "string_refs": [
+        "http://",
+        "https://"
+      ],
+      "pseudocode": "__int64 __fastcall sub_9580(\n        __int64 a1,\n        char a2,\n        __int64 a3,\n        __int64 a4,\n        int a5,\n        int a6,\n        int a7,\n        int a8,\n        int a9,\n        unsigned int a10,\n        size_t a11,\n        int a12,\n        unsigned int a13,\n        size_t a14)\n{\n  __int64 v14; // x19\n  const char *v19; // x24\n  int v20; // w5\n  int v21; // w6\n  int v22; // w7\n  unsigned int v24; // w0\n\n  v14 = 708609;\n  if ( a1 )\n  {\n    if ( *(_QWORD *)(a1 + 1504) )\n    {\n      v19 = *(const char **)(a1 + 168);\n      if ( v19 && *v19 )\n      {\n        if ( !strncmp(*(const char **)(a1 + 168), \"http://\", 7u) || !strncmp(v19, \"https://\", 8u) )\n        {\n          v14 = sub_94B4(a2, a3, a4, (int)&a11, (int)&a10, v20, v21, v22);\n          if ( !(_DWORD)v14 )\n          {\n            v24 = sub_987C(a1);\n            if ( v24 )\n            {\n              if ( v24 == 12306 )\n                v14 = 0;\n              else\n                v14 = v24;\n            }\n            else\n            {\n              bzero((void *)a14, a13);\n              free((void *)a14);\n              v14 = 0;\n              a14 = 0;\n            }\n            bzero((void *)a11, a10);\n            free((void *)a11);\n          }\n        }\n        else\n        {\n          return 708628;\n        }\n      }\n      else\n      {\n        return 0;\n      }\n    }\n    else\n    {\n      return sub_9398(*(char **)(a1 + 168), *(const char **)(a1 + 160), a2);\n    }\n  }\n  return v14;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x96F8",
+      "name": "sub_96F8",
+      "size": 152,
+      "calls": [
+        "_semaphore_create",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x68FC (_process)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_96F8(__int64 a1)\n{\n  kern_return_t v1; // w0\n\n  if ( !a1 )\n    return 708609;\n  *(_QWORD *)(a1 + 64) = sub_9300;\n  *(_QWORD *)(a1 + 1520) = sub_9580;\n  if ( !*(_QWORD *)(a1 + 1504) )\n    return 0;\n  v1 = semaphore_create(mach_task_self_, (semaphore_t *)(a1 + 1528), 0, 1);\n  if ( v1 )\n    return v1 | 0x80000000;\n  else\n    return 0;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x9790",
+      "name": "sub_9790",
+      "size": 236,
+      "calls": [
+        "_CFReadStreamRead",
+        "_CFHTTPMessageAppendBytes",
+        "_CFReadStreamCopyProperty",
+        "_CFHTTPMessageGetResponseStatusCode",
+        "_CFRelease",
+        "_CFRunLoopGetCurrent",
+        "_CFRunLoopStop",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x978C (sub_96F8)",
+        "0x9018 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "void __fastcall sub_9790(__CFReadStream *a1, __int64 a2, __int64 a3)\n{\n  __int64 v4; // x0\n  __CFHTTPMessage *v5; // x0\n  __CFHTTPMessage *v6; // x20\n  __CFRunLoop *Current; // x0\n  UInt8 v8[4096]; // [xsp+0h] [xbp-1020h] BYREF\n\n  if ( !a1 || !a3 )\n    goto LABEL_15;\n  if ( a2 > 3 )\n  {\n    switch ( a2 )\n    {\n      case 4LL:\n        return;\n      case 8LL:\n        *(_DWORD *)(a3 + 8) = 12296;\n        break;\n      case 16LL:\n        v5 = (__CFHTTPMessage *)CFReadStreamCopyProperty(a1, kCFStreamPropertyHTTPResponseHeader);\n        if ( v5 )\n        {\n          v6 = v5;\n          *(_DWORD *)(a3 + 12) = CFHTTPMessageGetResponseStatusCode(v5);\n          CFRelease(v6);\n        }\n        break;\n    }\n    goto LABEL_15;\n  }\n  if ( (unsigned __int64)a2 >= 2 )\n  {\n    if ( a2 != 2\n      || (v4 = CFReadStreamRead(a1, v8, 4096), v4 > 0) && !CFHTTPMessageAppendBytes(*(CFHTTPMessageRef *)a3, v8, v4) )\n    {\nLABEL_15:\n      Current = CFRunLoopGetCurrent();\n      CFRunLoopStop(Current);\n    }\n  }\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x987C",
+      "name": "sub_987C",
+      "size": 440,
+      "calls": [
+        "_semaphore_wait",
+        "_thread_switch",
+        "_strncpy",
+        "_semaphore_signal",
+        "sub_B0FC",
+        "_malloc",
+        "_memcpy"
+      ],
+      "called_by": [
+        "0x9878 (sub_9790)",
+        "0x934C (sub_9300)",
+        "0x96AC (sub_9580)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_987C(__int64 a1, const char *a2, const char *a3, __int64 a4, _QWORD *a5, _DWORD *a6)\n{\n  __int64 v6; // x20\n  __int64 v13; // x26\n  __int64 v14; // x8\n  __int64 v15; // x8\n  int v16; // w9\n  int *v17; // x25\n  int v18; // w8\n  size_t v20; // x23\n  void *v21; // x0\n  void *v22; // x24\n\n  v6 = 708609;\n  if ( a5 && a6 )\n  {\n    *a5 = 0;\n    *a6 = 0;\n    if ( semaphore_wait(*(_DWORD *)(a1 + 1528)) )\n      return 12309;\n    if ( a4 )\n    {\n      v13 = a4;\n      while ( 1 )\n      {\n        v14 = *(_QWORD *)(a1 + 1504);\n        if ( !*(_DWORD *)v14 )\n          break;\n        if ( *(_DWORD *)v14 != 5 )\n        {\n          thread_switch(0, 2, 1u);\n          if ( --v13 )\n            continue;\n        }\n        goto LABEL_15;\n      }\n      strncpy((char *)(v14 + 4), a2, 0x7FFFFCu);\n      *(_BYTE *)(*(_QWORD *)(a1 + 1504) + 0x7FFFFFLL) = 0;\n      v15 = *(_QWORD *)(a1 + 1504);\n      if ( a3 )\n      {\n        strncpy((char *)(v15 + 0x800000), a3, 0x800000u);\n        *(_BYTE *)(*(_QWORD *)(a1 + 1504) + 0xFFFFFFLL) = 0;\n        v15 = *(_QWORD *)(a1 + 1504);\n        v16 = 7;\n      }\n      else\n      {\n        v16 = 1;\n      }\n      *(_DWORD *)v15 = v16;\nLABEL_15:\n      while ( 1 )\n      {\n        v17 = *(int **)(a1 + 1504);\n        v18 = *v17;\n        if ( (unsigned int)(*v17 - 3) < 2 )\n          break;\n        thread_switch(0, 2, 1u);\n        if ( !--a4 )\n          goto LABEL_17;\n      }\n      *v17 = 0;\n      if ( v18 == 3 )\n      {\n        v20 = (unsigned int)v17[1];\n        if ( (_DWORD)v20 )\n        {\n          v21 = malloc((unsigned int)v17[1]);\n          if ( v21 )\n          {\n            v22 = v21;\n            memcpy(v21, v17 + 2, v20);\n            v6 = 0;\n            *a5 = v22;\n            *a6 = v20;\n          }\n          else\n          {\n            v6 = 708617;\n          }\n        }\n        else\n        {\n          v6 = 12306;\n        }\n        goto LABEL_19;\n      }\n    }\n    else\n    {\nLABEL_17:\n      **(_DWORD **)(a1 + 1504) = 0;\n    }\n    v6 = 12309;\nLABEL_19:\n    semaphore_signal(*(_DWORD *)(a1 + 1528));\n  }\n  return v6;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x9A34",
+      "name": "sub_9A34",
+      "size": 300,
+      "calls": [
+        "_vsnprintf",
+        "_malloc",
+        "_bzero",
+        "_free",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x9504 (sub_94B4)",
+        "0x9528 (sub_94B4)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_9A34(char **a1, _DWORD *a2, char *__format, int a4, int a5, int a6, int a7, int a8, char a9)\n{\n  __int64 v9; // x19\n  int v13; // w0\n  int v14; // w24\n  size_t v15; // x25\n  char *v16; // x0\n  char *v17; // x22\n\n  v9 = 708609;\n  if ( a1 && a2 && __format )\n  {\n    v13 = vsnprintf(0, 0, __format, &a9);\n    if ( v13 < 1 )\n    {\n      v17 = 0;\n      LODWORD(v16) = 0;\n      v9 = 708628;\n    }\n    else\n    {\n      v14 = v13;\n      v15 = (unsigned int)(v13 + 1);\n      v16 = (char *)malloc(v15);\n      v17 = v16;\n      if ( v16 )\n      {\n        LODWORD(v16) = vsnprintf(v16, v15, __format, &a9);\n        if ( (int)v16 <= v14 )\n        {\n          v9 = 0;\n          v17[v14] = 0;\n        }\n        else\n        {\n          bzero(v17, v15);\n          free(v17);\n          v17 = 0;\n          LODWORD(v16) = 0;\n          v9 = 708619;\n        }\n      }\n      else\n      {\n        v9 = 708617;\n      }\n    }\n    *a1 = v17;\n    *a2 = (_DWORD)v16;\n  }\n  return v9;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x9B60",
+      "name": "sub_9B60",
+      "size": 344,
+      "calls": [
+        "_sysctlbyname",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x9B5C (sub_9A34)",
+        "0x89F8 (sub_89CC)",
+        "0xA2F0 (sub_A294)",
+        "0xA504 (sub_A418)",
+        "0xABA0 (sub_AB8C)"
+      ],
+      "string_refs": [
+        "hw.model"
+      ],
+      "pseudocode": "__int64 __fastcall sub_9B60(__int64 result)\n{\n  __int64 v1; // x19\n  unsigned int v2; // w8\n  int v3; // w8\n  int v4; // w9\n  size_t v5; // [xsp+8h] [xbp-38h] BYREF\n  _BYTE v6[32]; // [xsp+10h] [xbp-30h] BYREF\n\n  if ( result )\n  {\n    v1 = result;\n    v2 = *(_DWORD *)(result + 192);\n    if ( v2 > 0x1006FF )\n      return 1;\n    if ( v2 <= 0x100400 )\n    {\n      if ( v2 - 984839 < 0xF8F9 )\n        return 1;\n      if ( (v2 - 983552) >> 9 <= 0x7E )\n      {\n        memset(v6, 0, sizeof(v6));\n        v5 = 32;\n        if ( !sysctlbyname(\"hw.model\", v6, &v5, 0, 0) && (v6[0] & 0xDF) == 0x4A )\n          return (unsigned __int64)(*(_QWORD *)(v1 + 1600) - 1073741825LL) >> 30 == 0;\n      }\n    }\n    else\n    {\n      v3 = *(_DWORD *)(result + 224);\n      result = 1;\n      if ( v3 > 458787762 )\n      {\n        if ( v3 != 458787763 )\n        {\n          v4 = 1176831186;\nLABEL_15:\n          if ( v3 != v4 )\n            return result;\n        }\n      }\n      else if ( v3 != -2023363094 )\n      {\n        v4 = -634136515;\n        goto LABEL_15;\n      }\n    }\n    return 0;\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x9CB8",
+      "name": "sub_9CB8",
+      "size": 608,
+      "calls": [
+        "sub_AB8C",
+        "_bzero",
+        "_uname",
+        "sub_9F18",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x9CB4 (sub_9B60)",
+        "0xA69C (sub_A418)",
+        "0xA8D8 (sub_A418)",
+        "0xAA88 (sub_A418)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_9CB8(__int64 a1, char *a2, int a3, __int64 a4, __int64 a5, __int64 a6)\n{\n  __int64 result; // x0\n  int v10; // w21\n  int v11; // w20\n  int v12; // w19\n  int v13; // w7\n  int v14; // w25\n  unsigned int v15; // w27\n  unsigned int v16; // w28\n  int v17; // w10\n  unsigned int v18; // w8\n  unsigned int v19; // w0\n  int v20; // w7\n  int v21; // w8\n  unsigned int v22; // w8\n  unsigned int v23; // w9\n  int v24; // w11\n  int v25; // w10\n  bool v26; // cf\n  int v27; // w9\n  int v28; // w10\n  int v29; // w11\n  __int64 v30; // [xsp+0h] [xbp-560h]\n  __int64 v31; // [xsp+0h] [xbp-560h]\n  utsname v32; // [xsp+8h] [xbp-558h] BYREF\n\n  result = 708609;\n  if ( !a1 )\n    return result;\n  if ( !a2 )\n    return result;\n  if ( !a3 )\n    return result;\n  v10 = a4;\n  if ( !a4 )\n    return result;\n  v11 = a5;\n  if ( !a5 )\n    return result;\n  v12 = a6;\n  if ( !a6 )\n    return result;\n  v14 = sub_AB8C(a1);\n  if ( !v14 )\n  {\n    v18 = 0;\n    goto LABEL_21;\n  }\n  v15 = *(_DWORD *)(a1 + 220);\n  v16 = *(_DWORD *)(a1 + 192);\n  if ( v16 > 0xF05FF )\n    goto LABEL_18;\n  if ( v16 <= 0xEFFFF )\n  {\n    if ( v16 < 0xE0802 )\n    {\n      if ( v16 < 0xD0000 )\n      {\n        v18 = 0;\n        v14 = 0;\n      }\n      else\n      {\n        v22 = (v16 >> 8) & 0xF00;\n        v23 = (v16 >> 4) & 0xF0;\n        if ( v23 >= 0x50 )\n          v24 = 80;\n        else\n          v24 = 0;\n        if ( v23 > 0x6F )\n          v24 = 112;\n        if ( (v16 & 0xF) != 0 )\n          v25 = (v16 >> 4) & 0xF0;\n        else\n          v25 = 112;\n        v26 = v23 >= 0x80;\n        if ( v23 >= 0x80 )\n          v27 = v25;\n        else\n          v27 = v24;\n        if ( v26 )\n          v28 = *(_DWORD *)(a1 + 192) & 0xF;\n        else\n          v28 = 0;\n        if ( v22 < 0xE00 )\n        {\n          v27 = 0;\n          v28 = 0;\n        }\n        if ( v15 <= 1 )\n          v29 = 0x10000000;\n        else\n          v29 = 285212672;\n        v18 = v22 | v29 | v27 | v28;\n      }\n      goto LABEL_21;\n    }\n    goto LABEL_18;\n  }\n  bzero(&v32, 0x500u);\n  if ( uname(&v32) || *(_DWORD *)v32.machine ^ 0x6F685069 | *(unsigned __int16 *)&v32.machine[4] ^ 0x656E )\n  {\nLABEL_18:\n    if ( v15 <= 1 )\n      v18 = 0x2000000;\n    else\n      v18 = -503316480;\n    goto LABEL_21;\n  }\n  if ( v15 <= 1 )\n    v17 = 301989888;\n  else\n    v17 = 318767104;\n  v18 = (v16 >> 8) & 0xF00 | v17 & 0xFFFFFFDF | (32 * ((v16 & 0xE00) != 0));\nLABEL_21:\n  result = sub_9F18(\n             a1,\n             v14 | v18,\n             a2,\n             a3,\n             v10,\n             v11,\n             v12,\n             v13,\n             v30,\n             *(__int64 *)v32.sysname,\n             v32.sysname[8],\n             *(__int64 *)&v32.sysname[16],\n             *(__int64 *)&v32.sysname[24],\n             *(__int64 *)&v32.sysname[32],\n             *(__int128 *)&v32.sysname[40],\n             *(__int64 *)&v32.sysname[56],\n             *(__int64 *)&v32.sysname[64],\n             *(__int128 *)&v32.sysname[72],\n             *(__int64 *)&v32.sysname[88],\n             *(__int64 *)&v32.sysname[96],\n             *(__int128 *)&v32.sysname[104],\n             *(__int64 *)&v32.sysname[120],\n             *(__int64 *)&v32.sysname[128],\n             *(__int128 *)&v32.sysname[136],\n             *(__int64 *)&v32.sysname[152],\n             *(__int64 *)&v32.sysname[160],\n             *(__int128 *)&v32.sysname[168],\n             *(__int64 *)&v32.sysname[184],\n             *(__int64 *)&v32.sysname[192],\n             *(__int128 *)&v32.sysname[200],\n             *(__int64 *)&v32.sysname[216],\n             *(__int64 *)&v32.sysname[224],\n             *(__int128 *)&v32.sysname[232],\n             *(__int64 *)&v32.sysname[248],\n             *(__int64 *)v32.nodename,\n             *(__int128 *)&v32.nodename[8],\n             *(__int64 *)&v32.nodename[24],\n             *(__int64 *)&v32.nodename[32],\n             *(__int128 *)&v32.nodename[40],\n             *(__int64 *)&v32.nodename[56],\n             *(__int64 *)&v32.nodename[64],\n             *(__int128 *)&v32.nodename[72],\n             *(__int64 *)&v32.nodename[88],\n             *(__int64 *)&v32.nodename[96],\n             *(__int128 *)&v32.nodename[104],\n             *(__int64 *)&v32.nodename[120],\n             *(__int64 *)&v32.nodename[128],\n             *(__int128 *)&v32.nodename[136],\n             *(__int64 *)&v32.nodename[152],\n             *(__int64 *)&v32.nodename[160],\n             *(__int128 *)&v32.nodename[168],\n             *(__int64 *)&v32.nodename[184],\n             *(__int64 *)&v32.nodename[192],\n             *(__int128 *)&v32.nodename[200],\n             *(__int64 *)&v32.nodename[216],\n             *(__int64 *)&v32.nodename[224],\n             *(__int128 *)&v32.nodename[232]);\n  if ( (_DWORD)result == 196609 )\n  {\n    v19 = sub_AB8C(a1);\n    if ( v19 )\n    {\n      if ( (*(_BYTE *)(a1 + 219) & 1) != 0 )\n      {\n        if ( *(_DWORD *)(a1 + 220) <= 1u )\n          v21 = 0x2000000;\n        else\n          v21 = -503316480;\n      }\n      else\n      {\n        v21 = 0x1000000;\n      }\n    }\n    else\n    {\n      v21 = 0;\n    }\n    return sub_9F18(\n             a1,\n             v21 | v19,\n             a2,\n             a3,\n             v10,\n             v11,\n             v12,\n             v20,\n             v31,\n             *(__int64 *)v32.sysname,\n             v32.sysname[8],\n             *(__int64 *)&v32.sysname[16],\n             *(__int64 *)&v32.sysname[24],\n             *(__int64 *)&v32.sysname[32],\n             *(__int128 *)&v32.sysname[40],\n             *(__int64 *)&v32.sysname[56],\n             *(__int64 *)&v32.sysname[64],\n             *(__int128 *)&v32.sysname[72],\n             *(__int64 *)&v32.sysname[88],\n             *(__int64 *)&v32.sysname[96],\n             *(__int128 *)&v32.sysname[104],\n             *(__int64 *)&v32.sysname[120],\n             *(__int64 *)&v32.sysname[128],\n             *(__int128 *)&v32.sysname[136],\n             *(__int64 *)&v32.sysname[152],\n             *(__int64 *)&v32.sysname[160],\n             *(__int128 *)&v32.sysname[168],\n             *(__int64 *)&v32.sysname[184],\n             *(__int64 *)&v32.sysname[192],\n             *(__int128 *)&v32.sysname[200],\n             *(__int64 *)&v32.sysname[216],\n             *(__int64 *)&v32.sysname[224],\n             *(__int128 *)&v32.sysname[232],\n             *(__int64 *)&v32.sysname[248],\n             *(__int64 *)v32.nodename,\n             *(__int128 *)&v32.nodename[8],\n             *(__int64 *)&v32.nodename[24],\n             *(__int64 *)&v32.nodename[32],\n             *(__int128 *)&v32.nodename[40],\n             *(__int64 *)&v32.nodename[56],\n             *(__int64 *)&v32.nodename[64],\n             *(__int128 *)&v32.nodename[72],\n             *(__int64 *)&v32.nodename[88],\n             *(__int64 *)&v32.nodename[96],\n             *(__int128 *)&v32.nodename[104],\n             *(__int64 *)&v32.nodename[120],\n             *(__int64 *)&v32.nodename[128],\n             *(__int128 *)&v32.nodename[136],\n             *(__int64 *)&v32.nodename[152],\n             *(__int64 *)&v32.nodename[160],\n             *(__int128 *)&v32.nodename[168],\n             *(__int64 *)&v32.nodename[184],\n             *(__int64 *)&v32.nodename[192],\n             *(__int128 *)&v32.nodename[200],\n             *(__int64 *)&v32.nodename[216],\n             *(__int64 *)&v32.nodename[224],\n             *(__int128 *)&v32.nodename[232]);\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0x9F18",
+      "name": "sub_9F18",
+      "size": 892,
+      "calls": [
+        "sub_B0FC",
+        "_strlen",
+        "_snprintf",
+        "_strncmp",
+        "_strlcpy",
+        "_strchr",
+        "_strlcat"
+      ],
+      "called_by": [
+        "0x9DF0 (sub_9CB8)",
+        "0x9E50 (sub_9CB8)",
+        "0xA3D8 (sub_A294)",
+        "0xA810 (sub_A418)"
+      ],
+      "string_refs": [
+        "%s/%s",
+        "%s%s",
+        "https://",
+        "http://"
+      ],
+      "pseudocode": "__int64 __fastcall sub_9F18(\n        __int64 a1,\n        int a2,\n        char *__s,\n        unsigned int a4,\n        char *a5,\n        size_t a6,\n        _QWORD *a7,\n        int a8,\n        __int64 a9,\n        __int64 a10,\n        __int128 __str,\n        __int128 a12,\n        __int128 a13,\n        __int128 a14,\n        __int128 a15,\n        __int128 a16,\n        __int128 a17,\n        __int128 a18,\n        __int128 a19,\n        __int128 a20,\n        __int128 a21,\n        __int128 a22,\n        __int128 a23,\n        __int128 a24,\n        __int128 a25,\n        __int128 a26,\n        __int128 a27,\n        __int128 a28,\n        __int128 a29,\n        __int128 a30,\n        __int128 a31,\n        __int128 a32,\n        __int128 a33,\n        __int128 a34,\n        __int128 a35,\n        __int128 a36,\n        __int128 a37,\n        __int128 a38,\n        __int128 a39,\n        __int128 a40,\n        __int128 a41)\n{\n  __int64 v41; // x26\n  unsigned __int16 v42; // w0\n  __int64 result; // x0\n  __int64 v48; // x8\n  char *v49; // x9\n  char *i; // x25\n  const char *v51; // x2\n  int v52; // w24\n  const char *v53; // x22\n  __int64 v54; // x23\n  char *v55; // x0\n  char *v56; // x23\n  const char *v57; // x9\n  __int128 *p_str; // x8\n  size_t v59; // x0\n  int v60; // w26\n  const char *v61; // x24\n  char *v62; // x0\n  const char *v63; // x24\n  int v64; // t1\n  size_t v65; // x2\n\n  v41 = 708609;\n  if ( a1\n    && __s\n    && a4 >= 0x10C\n    && *(_DWORD *)__s == 305419896\n    && __s[8]\n    && !__s[263]\n    && *((_DWORD *)__s + 66)\n    && a5\n    && a6\n    && a7 )\n  {\n    result = 196609;\n    if ( a2 )\n    {\n      v48 = 0;\n      v49 = &__s[a4];\n      for ( i = __s + 268; ; i += 100 )\n      {\n        if ( v49 <= i || i + 100 < __s || v49 < i + 100 || i[99] )\n        {\n          v42 = -12268;\n          return v42 | 0xA0000u;\n        }\n        if ( *(_DWORD *)i == a2 )\n          break;\n        if ( ++v48 >= (unsigned __int64)*((unsigned int *)__s + 66) )\n          return result;\n      }\n      a41 = 0u;\n      *(_OWORD *)&STACK[0x470] = 0u;\n      a39 = 0u;\n      a40 = 0u;\n      a37 = 0u;\n      a38 = 0u;\n      a35 = 0u;\n      a36 = 0u;\n      a33 = 0u;\n      a34 = 0u;\n      a31 = 0u;\n      a32 = 0u;\n      a29 = 0u;\n      a30 = 0u;\n      a27 = 0u;\n      a28 = 0u;\n      a25 = 0u;\n      a26 = 0u;\n      a23 = 0u;\n      a24 = 0u;\n      a21 = 0u;\n      a22 = 0u;\n      a19 = 0u;\n      a20 = 0u;\n      a17 = 0u;\n      a18 = 0u;\n      a15 = 0u;\n      a16 = 0u;\n      a13 = 0u;\n      a14 = 0u;\n      __str = 0u;\n      a12 = 0u;\n      if ( __s[strlen(__s + 8) + 7] == 47 )\n        v51 = \"%s%s\";\n      else\n        v51 = \"%s/%s\";\n      if ( snprintf((char *)&__str, 0x200u, v51) > 511 )\n        return 708620;\n      v52 = (unsigned __int8)__str;\n      if ( !(_BYTE)__str )\n        return v41;\n      if ( !((unsigned int)__str ^ 0x70747468 | *(_DWORD *)((char *)&__str + 3) ^ 0x2F2F3A70)\n        || (_QWORD)__str == 0x2F2F3A7370747468LL )\n      {\n        strlcpy(a5, (const char *)&__str, a6);\nLABEL_38:\n        v41 = 0;\n        *a7 = i + 4;\n        return v41;\n      }\n      v53 = *(const char **)(a1 + 128);\n      if ( !v53 || !*v53 )\n        return 196611;\n      v54 = 8;\n      if ( strncmp(v53, \"https://\", 8u) )\n      {\n        v54 = 7;\n        if ( strncmp(v53, \"http://\", 7u) )\n          return 196612;\n      }\n      v55 = strchr(&v53[v54], 47);\n      v56 = v55;\n      if ( v55 )\n      {\n        v57 = v55 + 1;\n        if ( v52 == 47 )\n        {\n          p_str = &__str;\n          v59 = v57 - v53;\nLABEL_50:\n          v63 = (char *)p_str - 1;\n          do\n            v64 = *(unsigned __int8 *)++v63;\n          while ( v64 == 47 );\n          if ( v59 + 1 <= a6 )\n            v65 = v59 + 1;\n          else\n            v65 = a6;\n          strlcpy(a5, v53, v65);\n          if ( !v56 )\n            strlcat(a5, \"/\", a6);\n          strlcat(a5, v63, a6);\n          goto LABEL_38;\n        }\n        v60 = v52;\n        do\n        {\n          v61 = v57;\n          v62 = strchr(v57, 47);\n          v57 = v62 + 1;\n        }\n        while ( v62 );\n        v59 = v61 - v53;\n      }\n      else\n      {\n        v60 = v52;\n        v59 = strlen(v53);\n      }\n      p_str = &__str;\n      if ( v60 == 46 )\n        p_str = (__int128 *)((unsigned __int64)&__str & 0xFFFFFFFFFFFFFFFDLL | (2LL * (BYTE1(__str) == 47)));\n      goto LABEL_50;\n    }\n  }\n  else\n  {\n    v42 = -12287;\n    return v42 | 0xA0000u;\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xA294",
+      "name": "sub_A294",
+      "size": 388,
+      "calls": [
+        "sub_9B60",
+        "sub_AB8C",
+        "sub_9F18",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0xA5D8 (sub_A418)",
+        "0xA8B0 (sub_A418)"
+      ],
+      "string_refs": [],
+      "error": "decompile() returned None",
+      "status": "failed",
+      "disassembly": "  0xA294:  STP             X26, X25, [SP,#-0x10+var_40]!; __int64    ; __int64\n  0xA298:  STP             X24, X23, [SP,#0x40+__str]; __str    ; __str\n  0xA29C:  STP             X22, X21, [SP,#0x40+var_20]; __int64    ; __int64\n  0xA2A0:  STP             X20, X19, [SP,#0x40+var_10]; __int128    ; __int128\n  0xA2A4:  STP             X29, X30, [SP,#0x40+var_s0]; __int64    ; __int64\n  0xA2A8:  ADD             X29, SP, #0x40\n  0xA2AC:  MOV             X24, X0\n  0xA2B0:  MOV             W0, #0xAD001\n  0xA2B8:  CBZ             X24, loc_A3DC\n  0xA2BC:  MOV             X23, X1\n  0xA2C0:  CBZ             X1, loc_A3DC\n  0xA2C4:  MOV             X22, X2\n  0xA2C8:  CBZ             W2, loc_A3DC\n  0xA2CC:  MOV             X21, X3\n  0xA2D0:  CBZ             X3, loc_A3DC\n  0xA2D4:  MOV             X20, X4\n  0xA2D8:  CBZ             X4, loc_A3DC\n  0xA2DC:  MOV             X19, X5\n  0xA2E0:  CBZ             X5, loc_A3DC\n  0xA2E4:  LDRB            W8, [X24,#0x5E8]\n  0xA2E8:  CBZ             W8, loc_A2F8\n  0xA2EC:  MOV             X0, X24\n  0xA2F0:  BL              sub_9B60\n  0xA2F4:  TBZ             W0, #0, loc_A300\n  0xA2F8:  MOV             W25, #0\n  0xA2FC:  B               loc_A380\n  0xA300:  LDR             W8, [X24,#0xC0]\n  0xA304:  MOV             W9, #0xFFEFFC00\n  0xA30C:  ADD             W9, W8, W9\n  0xA310:  LSR             W9, W9, #0xA\n  0xA314:  CMP             W9, #0x3E ; '>'\n  0xA318:  B.HI            loc_A370\n  0xA31C:  LDR             W9, [X24,#0xE0]\n  0xA320:  MOV             W25, #0x30000\n  0xA324:  MOV             W10, #0x1B588BB2\n  0xA32C:  CMP             W9, W10\n  0xA330:  B.GT            loc_A350\n  0xA334:  MOV             W10, #0x8765EDEA\n  0xA33C:  CMP             W9, W10\n  0xA340:  B.EQ            loc_A380\n  0xA344:  MOV             W10, #0xDA33D83D\n  0xA34C:  B               loc_A368\n  0xA350:  MOV             W10, #0x1B588BB3\n  0xA358:  CMP             W9, W10\n  0xA35C:  B.EQ            loc_A380\n  0xA360:  MOV             W10, #0x462504D2\n  0xA368:  CMP             W9, W10\n  0xA36C:  B.EQ            loc_A380\n  0xA370:  SUB             W8, W8, #0x100,LSL#12\n  0xA374:  CMP             W8, #0x401\n  0xA378:  MOV             W8, #0x50000\n  0xA37C:  CSEL            W25, W8, WZR, CC\n  0xA380:  MOV             X0, X24\n  0xA384:  BL              sub_AB8C\n  0xA388:  CBZ             W0, loc_A39C\n  0xA38C:  LDRB            W8, [X24,#0xDB]\n  0xA390:  TBNZ            W8, #0, loc_A3A4\n  0xA394:  MOV             W8, #0xF1000000\n  0xA398:  B               loc_A3B8\n  0xA39C:  MOV             W8, #0\n  0xA3A0:  B               loc_A3B8\n  0xA3A4:  LDR             W8, [X24,#0xDC]\n  0xA3A8:  CMP             W8, #1\n  0xA3AC:  MOV             W8, #0xF2000000\n  0xA3B0:  MOV             W9, #0xF3000000\n  0xA3B4:  CSEL            W8, W9, W8, HI\n  0xA3B8:  ORR             W9, W0, W25\n  0xA3BC:  ORR             W1, W9, W8; int    ; int\n  0xA3C0:  MOV             X0, X24; int    ; int\n  0xA3C4:  MOV             X2, X23; __s    ; __s\n  0xA3C8:  MOV             X3, X22; int    ; int\n  0xA3CC:  MOV             X4, X21; int    ; int\n  0xA3D0:  MOV             X5, X20; int    ; int\n  0xA3D4:  MOV             X6, X19; int    ; int\n  0xA3D8:  BL              sub_9F18\n  0xA3DC:  LDP             X29, X30, [SP,#0x40+var_s0]\n  0xA3E0:  LDP             X20, X19, [SP,#0x40+var_10]\n  0xA3E4:  LDP             X22, X21, [SP,#0x40+var_20]\n  0xA3E8:  LDP             X24, X23, [SP,#0x40+__str]\n  0xA3EC:  LDP             X26, X25, [SP+0x40+var_40],#0x50\n  0xA3F0:  MOV             X10, X30\n  0xA3F4:  MOV             X30, #0xAAAAAAAAAAAAAAAA\n  0xA3F8:  XPACLRI\n  0xA3FC:  MOV             X11, #0xAAAAAAAAAAAAAAAA\n  0xA400:  CMP             X11, X30\n  0xA404:  MOV             X30, X10\n  0xA408:  B.NE            loc_A410\n  0xA40C:  RET\n  0xA410:  MOV             X10, X30\n  0xA414:  BL              sub_B0FC"
+    },
+    {
+      "address": "0xA418",
+      "name": "sub_A418",
+      "size": 1908,
+      "calls": [
+        "sub_B0FC",
+        "sub_9B60",
+        "sub_A294",
+        "sub_AC44",
+        "sub_9CB8",
+        "_strdup",
+        "_strlen",
+        "_bzero",
+        "_free",
+        "sub_9F18"
+      ],
+      "called_by": [
+        "0xA414 (sub_A294)",
+        "0x6200 (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_A418(__int64 a1, __int64 a2, __int64 a3, __int64 a4)\n{\n  __int64 v4; // x24\n  bool v5; // zf\n  bool v6; // zf\n  __int64 v8; // x25\n  __int64 v10; // [xsp+8h] [xbp-298h] BYREF\n\n  v4 = 708609;\n  if ( a1 )\n  {\n    v5 = !*(_QWORD *)(a1 + 272) || (_DWORD)a2 == 0;\n    v6 = v5 || a3 == 0;\n    if ( !v6 && a4 != 0 )\n    {\n      v10 = 0;\n      v8 = sub_B0FC(a1, a2, &v10);\n      if ( !(_DWORD)v8 )\n        return 708609;\n      return v8;\n    }\n  }\n  return v4;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xAB8C",
+      "name": "sub_AB8C",
+      "size": 184,
+      "calls": [
+        "sub_9B60",
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x9D18 (sub_9CB8)",
+        "0x9E00 (sub_9CB8)",
+        "0xA384 (sub_A294)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_AB8C(__int64 result)\n{\n  __int64 v1; // x19\n  unsigned int v2; // w8\n  unsigned int v3; // w11\n\n  if ( result )\n  {\n    v1 = result;\n    if ( (sub_9B60(result) & 1) != 0 )\n    {\n      return 9437184;\n    }\n    else\n    {\n      v2 = *(_DWORD *)(v1 + 192);\n      if ( v2 <= 0x100500 )\n      {\n        if ( v2 >> 20 )\n        {\n          return 7340032;\n        }\n        else\n        {\n          if ( v2 <= 0xDFFFF )\n            v3 = 3145728;\n          else\n            v3 = 0x400000;\n          if ( v2 > 0xE04FF )\n            v3 = 7340032;\n          if ( v2 <= 0xF0706 )\n            return v3;\n          else\n            return 0x800000;\n        }\n      }\n      else\n      {\n        return 0x800000;\n      }\n    }\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xAC44",
+      "name": "sub_AC44",
+      "size": 328,
+      "calls": [
+        "sub_B0FC",
+        "sub_AD8C",
+        "sub_8430",
+        "_bzero",
+        "_free"
+      ],
+      "called_by": [
+        "0xAC40 (sub_AB8C)",
+        "0xA604 (sub_A418)",
+        "0xA83C (sub_A418)",
+        "0xAAAC (sub_A418)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_AC44(\n        __int64 a1,\n        _BYTE *a2,\n        char a3,\n        __int64 a4,\n        _QWORD *a5,\n        _DWORD *a6,\n        __int64 a7,\n        __int64 a8,\n        int a9,\n        int a10,\n        __int64 a11)\n{\n  __int64 v11; // x21\n  bool v16; // zf\n  bool v17; // zf\n  __int64 v20; // x0\n  _DWORD v22[3]; // [xsp+4h] [xbp-3Ch] BYREF\n\n  v11 = 708609;\n  if ( a1 )\n  {\n    if ( *(_QWORD *)(a1 + 64) && a2 != 0 )\n    {\n      v16 = !*a2 || a4 == 0;\n      v17 = v16 || a5 == 0;\n      if ( !v17 && a6 != 0 )\n      {\n        memset(v22, 0, sizeof(v22));\n        v20 = sub_B0FC(a1, a2, &v22[1]);\n        if ( !(_DWORD)v20 )\n        {\n          if ( (a3 & 1) != 0\n            || (a3 & 2) != 0 && (v11 = sub_8430((uint8_t **)&v22[1], v22), (_DWORD)v11)\n            || (v20 = sub_B0FC(a1, 0, *(_QWORD *)&v22[1]), v11 = v20, (_DWORD)v20) )\n          {\n            bzero(*(void **)&v22[1], v22[0]);\n            free(*(void **)&v22[1]);\n            return v11;\n          }\n          else\n          {\n            *a5 = a11;\n            *a6 = a10;\n          }\n        }\n        return v20;\n      }\n    }\n  }\n  return v11;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xAD8C",
+      "name": "sub_AD8C",
+      "size": 796,
+      "calls": [
+        "sub_B0FC"
+      ],
+      "called_by": [
+        "0x6108 (sub_5FEC)",
+        "0xACDC (sub_AC44)"
+      ],
+      "string_refs": [
+        "expand 32-byte k"
+      ],
+      "pseudocode": "__int64 __fastcall sub_AD8C(__int64 result, __int64 a2, __int64 a3)\n{\n  __int64 v3; // x8\n  unsigned __int64 v4; // x13\n  unsigned int v5; // w16\n  unsigned int v6; // w23\n  int v7; // w14\n  int v8; // w15\n  unsigned int v9; // w7\n  unsigned int v10; // w19\n  unsigned int v11; // w20\n  unsigned int v12; // w22\n  unsigned int v13; // w3\n  unsigned int v14; // w5\n  int v15; // w4\n  int v16; // w6\n  unsigned int v17; // w13\n  unsigned int v18; // w21\n  int v19; // w12\n  unsigned int v20; // w17\n  int v21; // w14\n  int v22; // w7\n  unsigned __int64 v23; // t2\n  int v24; // w20\n  int v25; // w23\n  int v26; // w14\n  int v27; // w7\n  int v28; // w20\n  int v29; // w23\n  int v30; // w24\n  int v31; // w15\n  int v32; // w19\n  int v33; // w22\n  int v34; // w16\n  int v35; // w15\n  int v36; // w19\n  int v37; // w22\n  int v38; // w16\n  int v39; // w25\n  int v40; // w4\n  int v41; // w21\n  int v42; // w17\n  int v43; // w3\n  int v44; // w4\n  int v45; // w21\n  int v46; // w17\n  int v47; // w3\n  int v48; // w26\n  int v49; // w6\n  int v50; // w13\n  int v51; // w0\n  int v52; // w5\n  int v53; // w6\n  int v54; // w13\n  int v55; // w0\n  int v56; // w5\n  int v57; // w27\n  int v58; // w14\n  int v59; // w13\n  int v60; // w17\n  int v61; // w16\n  int v62; // w15\n  int v63; // w7\n  int v64; // w0\n  int v65; // w3\n  int v66; // w4\n  int v67; // w19\n  int v68; // w20\n  int v69; // w5\n  int v70; // w6\n  int v71; // w21\n  int v72; // w22\n  int v73; // w23\n  __int64 v74; // x24\n  int v75; // w12\n  bool v76; // cf\n  __int64 v77; // [xsp+8h] [xbp-D8h]\n  __int128 v78; // [xsp+10h] [xbp-D0h]\n  __int128 v79; // [xsp+20h] [xbp-C0h]\n  __int128 v80; // [xsp+30h] [xbp-B0h]\n  __int128 v81; // [xsp+40h] [xbp-A0h]\n  __int128 v82; // [xsp+50h] [xbp-90h]\n  _BYTE v83[32]; // [xsp+60h] [xbp-80h]\n  __int128 v84; // [xsp+80h] [xbp-60h]\n\n  if ( a2 && a3 && result )\n  {\n    v3 = 0;\n    v80 = 0u;\n    v81 = 0u;\n    v78 = 0u;\n    v79 = 0u;\n    *(_DWORD *)v83 = *(_DWORD *)result;\n    *(_QWORD *)&v83[20] = *(_QWORD *)(result + 20);\n    v82 = xmmword_BB80;\n    *(_OWORD *)&v83[4] = *(_OWORD *)(result + 4);\n    *(_DWORD *)&v83[28] = *(_DWORD *)(result + 28);\n    v84 = 0u;\n    v4 = 64;\n    v77 = 64;\n    do\n    {\n      if ( v4 <= 0x3F )\n      {\n        LOBYTE(v75) = *((_BYTE *)&v78 + v4);\n      }\n      else\n      {\n        v80 = *(_OWORD *)&v83[16];\n        v81 = v84;\n        v78 = v82;\n        v79 = *(_OWORD *)v83;\n        v6 = *(_DWORD *)v83;\n        v5 = *(_DWORD *)&v83[4];\n        v7 = v82;\n        v8 = DWORD1(v82);\n        v9 = v84;\n        v10 = DWORD1(v84);\n        v11 = *(_DWORD *)&v83[16];\n        v12 = *(_DWORD *)&v83[20];\n        v13 = *(_DWORD *)&v83[8];\n        v14 = *(_DWORD *)&v83[12];\n        v15 = DWORD2(v82);\n        v16 = HIDWORD(v82);\n        v18 = DWORD2(v84);\n        v17 = HIDWORD(v84);\n        v19 = 10;\n        v20 = *(_DWORD *)&v83[24];\n        LODWORD(result) = *(_DWORD *)&v83[28];\n        do\n        {\n          v21 = v7 + v6;\n          v22 = v9 ^ v21;\n          HIDWORD(v23) = v22;\n          LODWORD(v23) = v22;\n          v24 = (v23 >> 16) + v11;\n          v25 = v24 ^ v6;\n          HIDWORD(v23) = v25;\n          LODWORD(v23) = v25;\n          v26 = (v23 >> 20) + v21;\n          LODWORD(v23) = v26 ^ __ROR4__(v22, 16);\n          v27 = v23;\n          HIDWORD(v23) = v23;\n          v28 = (v23 >> 24) + v24;\n          LODWORD(v23) = v28 ^ __ROR4__(v25, 20);\n          v29 = v23;\n          HIDWORD(v23) = v23;\n          v30 = v23 >> 25;\n          v31 = v8 + v5;\n          v32 = v10 ^ v31;\n          HIDWORD(v23) = v32;\n          LODWORD(v23) = v32;\n          v33 = (v23 >> 16) + v12;\n          v34 = v33 ^ v5;\n          HIDWORD(v23) = v34;\n          LODWORD(v23) = v34;\n          v35 = (v23 >> 20) + v31;\n          LODWORD(v23) = v35 ^ __ROR4__(v32, 16);\n          v36 = v23;\n          HIDWORD(v23) = v23;\n          v37 = (v23 >> 24) + v33;\n          LODWORD(v23) = v37 ^ __ROR4__(v34, 20);\n          v38 = v23;\n          HIDWORD(v23) = v23;\n          v39 = v23 >> 25;\n          v40 = v15 + v13;\n          v41 = v18 ^ v40;\n          HIDWORD(v23) = v41;\n          LODWORD(v23) = v41;\n          v42 = (v23 >> 16) + v20;\n          v43 = v42 ^ v13;\n          HIDWORD(v23) = v43;\n          LODWORD(v23) = v43;\n          v44 = (v23 >> 20) + v40;\n          LODWORD(v23) = v44 ^ __ROR4__(v41, 16);\n          v45 = v23;\n          HIDWORD(v23) = v23;\n          v46 = (v23 >> 24) + v42;\n          LODWORD(v23) = v46 ^ __ROR4__(v43, 20);\n          v47 = v23;\n          HIDWORD(v23) = v23;\n          v48 = v23 >> 25;\n          v49 = v16 + v14;\n          v50 = v17 ^ v49;\n          HIDWORD(v23) = v50;\n          LODWORD(v23) = v50;\n          v51 = (v23 >> 16) + result;\n          v52 = v51 ^ v14;\n          HIDWORD(v23) = v52;\n          LODWORD(v23) = v52;\n          v53 = (v23 >> 20) + v49;\n          LODWORD(v23) = v53 ^ __ROR4__(v50, 16);\n          v54 = v23;\n          HIDWORD(v23) = v23;\n          v55 = (v23 >> 24) + v51;\n          LODWORD(v23) = v55 ^ __ROR4__(v52, 20);\n          v56 = v23;\n          HIDWORD(v23) = v23;\n          v57 = v23 >> 25;\n          v58 = v39 + v26;\n          LODWORD(v23) = v58 ^ __ROR4__(v54, 24);\n          v59 = v23;\n          HIDWORD(v23) = v23;\n          v60 = (v23 >> 16) + v46;\n          LODWORD(v23) = v60 ^ __ROR4__(v38, 25);\n          v61 = v23;\n          HIDWORD(v23) = v23;\n          v7 = (v23 >> 20) + v58;\n          LODWORD(v23) = v7 ^ __ROR4__(v59, 16);\n          HIDWORD(v23) = v23;\n          v17 = v23 >> 24;\n          v20 = v17 + v60;\n          LODWORD(v23) = v20 ^ __ROR4__(v61, 20);\n          HIDWORD(v23) = v23;\n          v5 = v23 >> 25;\n          v62 = v48 + v35;\n          LODWORD(v23) = v62 ^ __ROR4__(v27, 24);\n          v63 = v23;\n          HIDWORD(v23) = v23;\n          v64 = (v23 >> 16) + v55;\n          LODWORD(v23) = v64 ^ __ROR4__(v47, 25);\n          v65 = v23;\n          HIDWORD(v23) = v23;\n          v8 = (v23 >> 20) + v62;\n          LODWORD(v23) = v8 ^ __ROR4__(v63, 16);\n          HIDWORD(v23) = v23;\n          v9 = v23 >> 24;\n          result = v9 + v64;\n          LODWORD(v23) = result ^ __ROR4__(v65, 20);\n          HIDWORD(v23) = v23;\n          v13 = v23 >> 25;\n          v66 = v57 + v44;\n          LODWORD(v23) = v66 ^ __ROR4__(v36, 24);\n          v67 = v23;\n          HIDWORD(v23) = v23;\n          v68 = (v23 >> 16) + v28;\n          LODWORD(v23) = v68 ^ __ROR4__(v56, 25);\n          v69 = v23;\n          HIDWORD(v23) = v23;\n          v15 = (v23 >> 20) + v66;\n          LODWORD(v23) = v15 ^ __ROR4__(v67, 16);\n          HIDWORD(v23) = v23;\n          v10 = v23 >> 24;\n          v11 = v10 + v68;\n          LODWORD(v23) = v11 ^ __ROR4__(v69, 20);\n          HIDWORD(v23) = v23;\n          v14 = v23 >> 25;\n          v70 = v53 + v30;\n          LODWORD(v23) = v70 ^ __ROR4__(v45, 24);\n          v71 = v23;\n          HIDWORD(v23) = v23;\n          v72 = (v23 >> 16) + v37;\n          LODWORD(v23) = v72 ^ __ROR4__(v29, 25);\n          v73 = v23;\n          HIDWORD(v23) = v23;\n          v16 = (v23 >> 20) + v70;\n          LODWORD(v23) = v16 ^ __ROR4__(v71, 16);\n          HIDWORD(v23) = v23;\n          v18 = v23 >> 24;\n          v12 = v18 + v72;\n          LODWORD(v23) = v12 ^ __ROR4__(v73, 20);\n          HIDWORD(v23) = v23;\n          v6 = v23 >> 25;\n          --v19;\n        }\n        while ( v19 );\n        v74 = 0;\n        *(_QWORD *)&v79 = __PAIR64__(v5, v6);\n        *(_QWORD *)&v81 = __PAIR64__(v10, v9);\n        *(_QWORD *)&v80 = __PAIR64__(v12, v11);\n        *((_QWORD *)&v79 + 1) = __PAIR64__(v14, v13);\n        *((_QWORD *)&v81 + 1) = __PAIR64__(v17, v18);\n        *((_QWORD *)&v80 + 1) = __PAIR64__(result, v20);\n        v75 = (unsigned __int8)(v82 + v7);\n        LODWORD(v78) = v82 + v7;\n        DWORD1(v78) = DWORD1(v82) + v8;\n        DWORD2(v78) = DWORD2(v82) + v15;\n        HIDWORD(v78) = v16;\n        do\n        {\n          *(_DWORD *)((char *)&v78 + v74 + 12) += *(_DWORD *)&v83[v74 - 4];\n          v74 += 4;\n        }\n        while ( v74 != 52 );\n        v76 = __CFADD__((_DWORD)v84, 1);\n        LODWORD(v84) = v84 + 1;\n        v4 = 0;\n        if ( v76 )\n          ++DWORD1(v84);\n      }\n      *(_BYTE *)(a2 + v3) ^= v75;\n      v77 = ++v4;\n      ++v3;\n    }\n    while ( v3 != a3 );\n  }\n  return result;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB0F8",
+      "name": "sub_B0F8",
+      "size": 4,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "__int64 __fastcall sub_B0F8(__int64 a1, __int64 a2, __int64 a3)\n{\n  return sub_B0FC(a1, a2, a3);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB0FC",
+      "name": "sub_B0FC",
+      "size": 96,
+      "calls": [
+        "sub_B15C"
+      ],
+      "called_by": [
+        "0xB0F8 (sub_B0F8)",
+        "0x5D28 (sub_5CEC)",
+        "0x5D64 (sub_5D2C)",
+        "0x5DC4 (sub_5D68)",
+        "0x5E74 (sub_5DC8)",
+        "0x5F0C (sub_5E78)",
+        "0x5F40 (sub_5E78)",
+        "0x5F9C (sub_5F4C)",
+        "0x5FE8 (sub_5FA0)",
+        "0x6054 (sub_5FEC)",
+        "0x6070 (sub_5FEC)",
+        "0x60A8 (sub_5FEC)",
+        "0x60E8 (sub_5FEC)",
+        "0x61A0 (sub_5FEC)",
+        "0x61C4 (sub_5FEC)",
+        "0x6270 (sub_5FEC)",
+        "0x62C8 (sub_5FEC)",
+        "0x62DC (sub_5FEC)",
+        "0x62FC (sub_5FEC)",
+        "0x63FC (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "__int64 sub_B0FC()\n{\n  __int64 (*v0)(void); // x10\n\n  if ( &dword_0 )\n  {\n    sub_B15C(v0, 0);\n    JUMPOUT(0);\n  }\n  return v0();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB15C",
+      "name": "sub_B15C",
+      "size": 60,
+      "calls": [],
+      "called_by": [
+        "0x6C0C (_process)",
+        "0x6D70 (sub_6C44)",
+        "0x6DAC (sub_6C44)",
+        "0x6DC0 (sub_6C44)",
+        "0xB120 (sub_B0FC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "void sub_B15C()\n{\n  ;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB198",
+      "name": "sub_B198",
+      "size": 60,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void sub_B198()\n{\n  ;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB1D4",
+      "name": "sub_B1D4",
+      "size": 60,
+      "calls": [],
+      "called_by": [
+        "0x6D60 (sub_6C44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "void sub_B1D4()\n{\n  ;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB210",
+      "name": "sub_B210",
+      "size": 80,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void sub_B210()\n{\n  ;\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB280",
+      "name": "_CFDataCreate",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8CA8 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFDataRef __cdecl CFDataCreate(CFAllocatorRef allocator, const UInt8 *bytes, CFIndex length)\n{\n  return _CFDataCreate(allocator, bytes, length);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB28C",
+      "name": "_CFDataGetBytePtr",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9218 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nconst UInt8 *__cdecl CFDataGetBytePtr(CFDataRef theData)\n{\n  return _CFDataGetBytePtr(theData);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB298",
+      "name": "_CFDataGetLength",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9208 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFIndex __cdecl CFDataGetLength(CFDataRef theData)\n{\n  return _CFDataGetLength(theData);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB2A4",
+      "name": "_CFDictionaryCreate",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8F6C (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFDictionaryRef __cdecl CFDictionaryCreate(\n        CFAllocatorRef allocator,\n        const void **keys,\n        const void **values,\n        CFIndex numValues,\n        const CFDictionaryKeyCallBacks *keyCallBacks,\n        const CFDictionaryValueCallBacks *valueCallBacks)\n{\n  return _CFDictionaryCreate(allocator, keys, values, numValues, keyCallBacks, valueCallBacks);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB2B0",
+      "name": "_CFDictionaryGetValue",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7108 (sub_7090)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nconst void *__cdecl CFDictionaryGetValue(CFDictionaryRef theDict, const void *key)\n{\n  return _CFDictionaryGetValue(theDict, key);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB2BC",
+      "name": "_CFEqual",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8F3C (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nBoolean __cdecl CFEqual(CFTypeRef cf1, CFTypeRef cf2)\n{\n  return _CFEqual(cf1, cf2);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB2C8",
+      "name": "_CFGetTypeID",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7114 (sub_7090)",
+        "0x737C (sub_71FC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFTypeID __cdecl CFGetTypeID(CFTypeRef cf)\n{\n  return _CFGetTypeID(cf);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB2D4",
+      "name": "_CFHTTPMessageAppendBytes",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x97E4 (sub_9790)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nBoolean __cdecl CFHTTPMessageAppendBytes(CFHTTPMessageRef message, const UInt8 *newBytes, CFIndex numBytes)\n{\n  return _CFHTTPMessageAppendBytes(message, newBytes, numBytes);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB2E0",
+      "name": "_CFHTTPMessageCopyBody",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x91BC (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFDataRef __cdecl CFHTTPMessageCopyBody(CFHTTPMessageRef message)\n{\n  return _CFHTTPMessageCopyBody(message);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB2EC",
+      "name": "_CFHTTPMessageCreateEmpty",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8FD8 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFHTTPMessageRef __cdecl CFHTTPMessageCreateEmpty(CFAllocatorRef alloc, Boolean isRequest)\n{\n  return _CFHTTPMessageCreateEmpty(alloc, isRequest);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB2F8",
+      "name": "_CFHTTPMessageCreateRequest",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8E00 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFHTTPMessageRef __cdecl CFHTTPMessageCreateRequest(\n        CFAllocatorRef alloc,\n        CFStringRef requestMethod,\n        CFURLRef url,\n        CFStringRef httpVersion)\n{\n  return _CFHTTPMessageCreateRequest(alloc, requestMethod, url, httpVersion);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB304",
+      "name": "_CFHTTPMessageGetResponseStatusCode",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9820 (sub_9790)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFIndex __cdecl CFHTTPMessageGetResponseStatusCode(CFHTTPMessageRef response)\n{\n  return _CFHTTPMessageGetResponseStatusCode(response);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB310",
+      "name": "_CFHTTPMessageSetBody",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8E18 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl CFHTTPMessageSetBody(CFHTTPMessageRef message, CFDataRef bodyData)\n{\n  _CFHTTPMessageSetBody(message, bodyData);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB31C",
+      "name": "_CFHTTPMessageSetHeaderFieldValue",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8E58 (sub_8B5C)",
+        "0x8EF8 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl CFHTTPMessageSetHeaderFieldValue(CFHTTPMessageRef message, CFStringRef headerField, CFStringRef value)\n{\n  _CFHTTPMessageSetHeaderFieldValue(message, headerField, value);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB328",
+      "name": "_CFPropertyListCreateWithStream",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7B14 (sub_7A98)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFPropertyListRef __cdecl CFPropertyListCreateWithStream(\n        CFAllocatorRef allocator,\n        CFReadStreamRef stream,\n        CFIndex streamLength,\n        CFOptionFlags options,\n        CFPropertyListFormat *format,\n        CFErrorRef *error)\n{\n  return _CFPropertyListCreateWithStream(allocator, stream, streamLength, options, format, error);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB334",
+      "name": "_CFReadStreamClose",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7B34 (sub_7A98)",
+        "0x9080 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl CFReadStreamClose(CFReadStreamRef stream)\n{\n  _CFReadStreamClose(stream);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB340",
+      "name": "_CFReadStreamCopyProperty",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9814 (sub_9790)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFTypeRef __cdecl CFReadStreamCopyProperty(CFReadStreamRef stream, CFStreamPropertyKey propertyName)\n{\n  return _CFReadStreamCopyProperty(stream, propertyName);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB34C",
+      "name": "_CFReadStreamCreateForHTTPRequest",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8F0C (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFReadStreamRef __cdecl CFReadStreamCreateForHTTPRequest(CFAllocatorRef alloc, CFHTTPMessageRef request)\n{\n  return _CFReadStreamCreateForHTTPRequest(alloc, request);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB358",
+      "name": "_CFReadStreamCreateWithFile",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7AE8 (sub_7A98)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFReadStreamRef __cdecl CFReadStreamCreateWithFile(CFAllocatorRef alloc, CFURLRef fileURL)\n{\n  return _CFReadStreamCreateWithFile(alloc, fileURL);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB364",
+      "name": "_CFReadStreamOpen",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7AF4 (sub_7A98)",
+        "0x9060 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nBoolean __cdecl CFReadStreamOpen(CFReadStreamRef stream)\n{\n  return _CFReadStreamOpen(stream);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB370",
+      "name": "_CFReadStreamRead",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x97CC (sub_9790)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFIndex __cdecl CFReadStreamRead(CFReadStreamRef stream, UInt8 *buffer, CFIndex bufferLength)\n{\n  return _CFReadStreamRead(stream, buffer, bufferLength);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB37C",
+      "name": "_CFReadStreamScheduleWithRunLoop",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9058 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl CFReadStreamScheduleWithRunLoop(CFReadStreamRef stream, CFRunLoopRef runLoop, CFRunLoopMode runLoopMode)\n{\n  _CFReadStreamScheduleWithRunLoop(stream, runLoop, runLoopMode);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB388",
+      "name": "_CFReadStreamSetClient",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9040 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nBoolean __cdecl CFReadStreamSetClient(\n        CFReadStreamRef stream,\n        CFOptionFlags streamEvents,\n        CFReadStreamClientCallBack clientCB,\n        CFStreamClientContext *clientContext)\n{\n  return _CFReadStreamSetClient(stream, streamEvents, clientCB, clientContext);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB394",
+      "name": "_CFReadStreamSetProperty",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8F84 (sub_8B5C)",
+        "0x8FB8 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nBoolean __cdecl CFReadStreamSetProperty(\n        CFReadStreamRef stream,\n        CFStreamPropertyKey propertyName,\n        CFTypeRef propertyValue)\n{\n  return _CFReadStreamSetProperty(stream, propertyName, propertyValue);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB3A0",
+      "name": "_CFRelease",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7148 (sub_7090)",
+        "0x7150 (sub_7090)",
+        "0x7190 (sub_7090)",
+        "0x7198 (sub_7090)",
+        "0x73AC (sub_71FC)",
+        "0x73FC (sub_71FC)",
+        "0x7B2C (sub_7A98)",
+        "0x7B58 (sub_7A98)",
+        "0x7B60 (sub_7A98)",
+        "0x8CC8 (sub_8B5C)",
+        "0x8E7C (sub_8B5C)",
+        "0x8E84 (sub_8B5C)",
+        "0x8E98 (sub_8B5C)",
+        "0x8F90 (sub_8B5C)",
+        "0x8FC4 (sub_8B5C)",
+        "0x9154 (sub_8B5C)",
+        "0x915C (sub_8B5C)",
+        "0x9164 (sub_8B5C)",
+        "0x916C (sub_8B5C)",
+        "0x9174 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl CFRelease(CFTypeRef cf)\n{\n  _CFRelease(cf);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB3AC",
+      "name": "_CFRunLoopGetCurrent",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9048 (sub_8B5C)",
+        "0x983C (sub_9790)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFRunLoopRef CFRunLoopGetCurrent(void)\n{\n  return _CFRunLoopGetCurrent();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB3B8",
+      "name": "_CFRunLoopRunInMode",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9078 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFRunLoopRunResult __cdecl CFRunLoopRunInMode(\n        CFRunLoopMode mode,\n        CFTimeInterval seconds,\n        Boolean returnAfterSourceHandled)\n{\n  return _CFRunLoopRunInMode(mode, seconds, returnAfterSourceHandled);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB3C4",
+      "name": "_CFRunLoopStop",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9840 (sub_9790)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl CFRunLoopStop(CFRunLoopRef rl)\n{\n  _CFRunLoopStop(rl);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB3D0",
+      "name": "_CFStringCreateWithCString",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x70F4 (sub_7090)",
+        "0x7344 (sub_71FC)",
+        "0x8BF4 (sub_8B5C)",
+        "0x8C20 (sub_8B5C)",
+        "0x8C4C (sub_8B5C)",
+        "0x8DDC (sub_8B5C)",
+        "0x8E3C (sub_8B5C)",
+        "0x8EDC (sub_8B5C)",
+        "0x8F2C (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFStringRef __cdecl CFStringCreateWithCString(CFAllocatorRef alloc, const char *cStr, CFStringEncoding encoding)\n{\n  return _CFStringCreateWithCString(alloc, cStr, encoding);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB3DC",
+      "name": "_CFStringGetCString",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x713C (sub_7090)",
+        "0x739C (sub_71FC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nBoolean __cdecl CFStringGetCString(CFStringRef theString, char *buffer, CFIndex bufferSize, CFStringEncoding encoding)\n{\n  return _CFStringGetCString(theString, buffer, bufferSize, encoding);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB3E8",
+      "name": "_CFStringGetLength",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8C00 (sub_8B5C)",
+        "0x8C2C (sub_8B5C)",
+        "0x8C58 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFIndex __cdecl CFStringGetLength(CFStringRef theString)\n{\n  return _CFStringGetLength(theString);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB3F4",
+      "name": "_CFStringGetSystemEncoding",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7128 (sub_7090)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFStringEncoding CFStringGetSystemEncoding(void)\n{\n  return _CFStringGetSystemEncoding();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB400",
+      "name": "_CFStringGetTypeID",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x711C (sub_7090)",
+        "0x7370 (sub_71FC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFTypeID CFStringGetTypeID(void)\n{\n  return _CFStringGetTypeID();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB40C",
+      "name": "_CFURLCopyScheme",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8DC0 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFStringRef __cdecl CFURLCopyScheme(CFURLRef anURL)\n{\n  return _CFURLCopyScheme(anURL);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB418",
+      "name": "_CFURLCreateFromFileSystemRepresentation",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7AD4 (sub_7A98)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFURLRef __cdecl CFURLCreateFromFileSystemRepresentation(\n        CFAllocatorRef allocator,\n        const UInt8 *buffer,\n        CFIndex bufLen,\n        Boolean isDirectory)\n{\n  return _CFURLCreateFromFileSystemRepresentation(allocator, buffer, bufLen, isDirectory);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB424",
+      "name": "_CFURLCreateWithString",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8DB0 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFURLRef __cdecl CFURLCreateWithString(CFAllocatorRef allocator, CFStringRef URLString, CFURLRef baseURL)\n{\n  return _CFURLCreateWithString(allocator, URLString, baseURL);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB430",
+      "name": "_SCDynamicStoreCopyProxies",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8FA0 (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nCFDictionaryRef __cdecl SCDynamicStoreCopyProxies(SCDynamicStoreRef store)\n{\n  return _SCDynamicStoreCopyProxies(store);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB43C",
+      "name": "__Block_object_assign",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6F50 (sub_6F30)",
+        "0x6F60 (sub_6F30)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl _Block_object_assign(void *a1, const void *a2, const int a3)\n{\n  __Block_object_assign(a1, a2, a3);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB448",
+      "name": "__Block_object_dispose",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6E6C (sub_6C44)",
+        "0x6FAC (sub_6F94)",
+        "0x6FB8 (sub_6F94)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl _Block_object_dispose(const void *a1, const int a2)\n{\n  __Block_object_dispose(a1, a2);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB454",
+      "name": "___error",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6890 (sub_5FEC)",
+        "0x6CBC (sub_6C44)",
+        "0x6E44 (sub_6C44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint *__error(void)\n{\n  return ___error();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB460",
+      "name": "_abort",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7040 (sub_6FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __noreturn abort(void)\n{\n  _abort();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB46C",
+      "name": "_bzero",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x5EF0 (sub_5E78)",
+        "0x5FB8 (sub_5FA0)",
+        "0x6AC0 (_process)",
+        "0x9468 (sub_9398)",
+        "0x9538 (sub_94B4)",
+        "0x96CC (sub_9580)",
+        "0x96E8 (sub_9580)",
+        "0x9AD8 (sub_9A34)",
+        "0x9D4C (sub_9CB8)",
+        "0xA71C (sub_A418)",
+        "0xA95C (sub_A418)",
+        "0xA978 (sub_A418)",
+        "0xAA14 (sub_A418)",
+        "0xAD24 (sub_AC44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl bzero(void *a1, size_t a2)\n{\n  _bzero(a1, a2);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB478",
+      "name": "_calloc",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8FEC (sub_8B5C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid *__cdecl calloc(size_t __count, size_t __size)\n{\n  return _calloc(__count, __size);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB484",
+      "name": "_compression_decode_buffer",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x84E4 (sub_8430)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nsize_t __cdecl compression_decode_buffer(\n        uint8_t *dst_buffer,\n        size_t dst_size,\n        const uint8_t *src_buffer,\n        size_t src_size,\n        void *scratch_buffer,\n        compression_algorithm algorithm)\n{\n  return _compression_decode_buffer(dst_buffer, dst_size, src_buffer, src_size, scratch_buffer, algorithm);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB490",
+      "name": "_dlclose",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x73EC (sub_71FC)",
+        "0x7418 (sub_71FC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl dlclose(void *__handle)\n{\n  return _dlclose(__handle);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB49C",
+      "name": "_dlopen",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7290 (sub_71FC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid *__cdecl dlopen(const char *__path, int __mode)\n{\n  return _dlopen(__path, __mode);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB4A8",
+      "name": "_dlsym",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x72A4 (sub_71FC)",
+        "0x72BC (sub_71FC)",
+        "0x72D4 (sub_71FC)",
+        "0x72EC (sub_71FC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid *__cdecl dlsym(void *__handle, const char *__symbol)\n{\n  return _dlsym(__handle, __symbol);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB4B4",
+      "name": "_exit",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6EC0 (sub_6C44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl __noreturn exit(int a1)\n{\n  _exit(a1);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB4C0",
+      "name": "_free",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8508 (sub_8430)",
+        "0x8584 (sub_8430)",
+        "0x8694 (sub_8590)",
+        "0x8984 (sub_8928)",
+        "0x914C (sub_8B5C)",
+        "0x9470 (sub_9398)",
+        "0x9540 (sub_94B4)",
+        "0x96D4 (sub_9580)",
+        "0x96F0 (sub_9580)",
+        "0x9AE0 (sub_9A34)",
+        "0xA724 (sub_A418)",
+        "0xA964 (sub_A418)",
+        "0xA980 (sub_A418)",
+        "0xAA1C (sub_A418)",
+        "0xAD2C (sub_AC44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid __cdecl free(void *a1)\n{\n  _free(a1);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB4CC",
+      "name": "_getpid",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7254 (sub_71FC)",
+        "0x8330 (sub_8298)",
+        "0x8A34 (sub_89CC)",
+        "0x8A64 (sub_89CC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\npid_t getpid(void)\n{\n  return _getpid();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB4D8",
+      "name": "_host_info",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6B20 (_process)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl host_info(\n        host_t host,\n        host_flavor_t flavor,\n        host_info_t host_info_out,\n        mach_msg_type_number_t *host_info_outCnt)\n{\n  return _host_info(host, flavor, host_info_out, host_info_outCnt);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB4E4",
+      "name": "_host_kernel_version",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7900 (sub_7720)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl host_kernel_version(host_t host, kernel_version_t kernel_version)\n{\n  return _host_kernel_version(host, kernel_version);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB4F0",
+      "name": "_mach_host_self",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6B10 (_process)",
+        "0x78F8 (sub_7720)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nmach_port_t mach_host_self(void)\n{\n  return _mach_host_self();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB4FC",
+      "name": "_malloc",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6B50 (_process)",
+        "0x6B88 (_process)",
+        "0x6D88 (sub_6C44)",
+        "0x84B0 (sub_8430)",
+        "0x85DC (sub_8590)",
+        "0x922C (sub_8B5C)",
+        "0x99FC (sub_987C)",
+        "0x9AA0 (sub_9A34)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid *__cdecl malloc(size_t __size)\n{\n  return _malloc(__size);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB508",
+      "name": "_memcpy",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6860 (sub_5FEC)",
+        "0x6B64 (_process)",
+        "0x6D9C (sub_6C44)",
+        "0x9240 (sub_8B5C)",
+        "0x9A10 (sub_987C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid *__cdecl memcpy(void *__dst, const void *__src, size_t __n)\n{\n  return _memcpy(__dst, __src, __n);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB514",
+      "name": "_memset_s",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x84C8 (sub_8430)",
+        "0x8500 (sub_8430)",
+        "0x857C (sub_8430)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nerrno_t __cdecl memset_s(void *__s, rsize_t __smax, int __c, rsize_t __n)\n{\n  return _memset_s(__s, __smax, __c, __n);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB520",
+      "name": "_mmap",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6534 (sub_5FEC)",
+        "0x6810 (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nvoid *__cdecl mmap(void *a1, size_t a2, int a3, int a4, int a5, off_t a6)\n{\n  return _mmap(a1, a2, a3, a4, a5, a6);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB52C",
+      "name": "_objc_alloc",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6D04 (sub_6C44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nid __cdecl objc_alloc(Class a1)\n{\n  return _objc_alloc(a1);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB538",
+      "name": "_proc_pidinfo",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8344 (sub_8298)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl proc_pidinfo(int pid, int flavor, uint64_t arg, void *buffer, int buffersize)\n{\n  return _proc_pidinfo(pid, flavor, arg, buffer, buffersize);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB544",
+      "name": "_pthread_attr_destroy",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6C30 (_process)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl pthread_attr_destroy(pthread_attr_t *a1)\n{\n  return _pthread_attr_destroy(a1);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB550",
+      "name": "_pthread_attr_init",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6BE4 (_process)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl pthread_attr_init(pthread_attr_t *a1)\n{\n  return _pthread_attr_init(a1);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB55C",
+      "name": "_pthread_attr_setdetachstate",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6BF4 (_process)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl pthread_attr_setdetachstate(pthread_attr_t *a1, int a2)\n{\n  return _pthread_attr_setdetachstate(a1, a2);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB568",
+      "name": "_pthread_create",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6C20 (_process)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl pthread_create(pthread_t *a1, const pthread_attr_t *a2, void *(__cdecl *a3)(void *), void *a4)\n{\n  return _pthread_create(a1, a2, a3, a4);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB574",
+      "name": "_sandbox_check",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7278 (sub_71FC)",
+        "0x8A70 (sub_89CC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\n__int64 __fastcall sandbox_check()\n{\n  return _sandbox_check();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB580",
+      "name": "_semaphore_create",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9740 (sub_96F8)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl semaphore_create(task_t task, semaphore_t *semaphore, int policy, int value)\n{\n  return _semaphore_create(task, semaphore, policy, value);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB58C",
+      "name": "_semaphore_signal",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x99A0 (sub_987C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl semaphore_signal(semaphore_t semaphore)\n{\n  return _semaphore_signal(semaphore);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB598",
+      "name": "_semaphore_wait",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x98C8 (sub_987C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl semaphore_wait(semaphore_t semaphore)\n{\n  return _semaphore_wait(semaphore);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB5A4",
+      "name": "_sigaction",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6CB4 (sub_6C44)",
+        "0x6E3C (sub_6C44)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl sigaction(int a1, const sigaction *a2, sigaction *a3)\n{\n  return _sigaction(a1, a2, a3);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB5B0",
+      "name": "_snprintf",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0xA0D8 (sub_9F18)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint snprintf(char *__str, size_t __size, const char *__format, ...)\n{\n  return _snprintf(__str, __size, __format);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB5BC",
+      "name": "_sscanf",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7178 (sub_7090)",
+        "0x7968 (sub_7720)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint sscanf(const char *a1, const char *a2, ...)\n{\n  return _sscanf(a1, a2);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB5C8",
+      "name": "_stat",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x724C (sub_71FC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl stat(const char *a1, stat *a2)\n{\n  return _stat(a1, a2);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB5D4",
+      "name": "_strchr",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0xA1D0 (sub_9F18)",
+        "0xA214 (sub_9F18)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nchar *__cdecl strchr(const char *__s, int __c)\n{\n  return _strchr(__s, __c);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB5E0",
+      "name": "_strdup",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6B70 (_process)",
+        "0x6BA4 (_process)",
+        "0x6BB8 (_process)",
+        "0x6BCC (_process)",
+        "0xA6AC (sub_A418)",
+        "0xA8E8 (sub_A418)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nchar *__cdecl strdup(const char *__s1)\n{\n  return _strdup(__s1);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB5EC",
+      "name": "_strlcat",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0xA27C (sub_9F18)",
+        "0xA28C (sub_9F18)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nsize_t __cdecl strlcat(char *__dst, const char *__source, size_t __size)\n{\n  return _strlcat(__dst, __source, __size);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB5F8",
+      "name": "_strlcpy",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0xA1A8 (sub_9F18)",
+        "0xA264 (sub_9F18)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nsize_t __cdecl strlcpy(char *__dst, const char *__source, size_t __size)\n{\n  return _strlcpy(__dst, __source, __size);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB604",
+      "name": "_strlen",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x7AC0 (sub_7A98)",
+        "0x8C98 (sub_8B5C)",
+        "0xA0A4 (sub_9F18)",
+        "0xA1FC (sub_9F18)",
+        "0xA6BC (sub_A418)",
+        "0xA710 (sub_A418)",
+        "0xA8F8 (sub_A418)",
+        "0xA950 (sub_A418)",
+        "0xA998 (sub_A418)",
+        "0xA9CC (sub_A418)",
+        "0xAAC8 (sub_A418)",
+        "0xAB04 (sub_A418)",
+        "0xAB40 (sub_A418)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nsize_t __cdecl strlen(const char *__s)\n{\n  return _strlen(__s);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB610",
+      "name": "_strncasecmp",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8B00 (sub_8AB8)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl strncasecmp(const char *a1, const char *a2, size_t a3)\n{\n  return _strncasecmp(a1, a2, a3);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB61C",
+      "name": "_strncmp",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x93E8 (sub_9398)",
+        "0x9400 (sub_9398)",
+        "0x95EC (sub_9580)",
+        "0x9604 (sub_9580)",
+        "0xA160 (sub_9F18)",
+        "0xA17C (sub_9F18)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl strncmp(const char *__s1, const char *__s2, size_t __n)\n{\n  return _strncmp(__s1, __s2, __n);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB628",
+      "name": "_strncpy",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x991C (sub_987C)",
+        "0x9940 (sub_987C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nchar *__cdecl strncpy(char *__dst, const char *__src, size_t __n)\n{\n  return _strncpy(__dst, __src, __n);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB634",
+      "name": "_strstr",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x77A0 (sub_7720)",
+        "0x77C8 (sub_7720)",
+        "0x7914 (sub_7720)",
+        "0x7928 (sub_7720)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nchar *__cdecl strstr(const char *__big, const char *__little)\n{\n  return _strstr(__big, __little);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB640",
+      "name": "_sys_dcache_flush",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x5E1C (sub_5DC8)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\n__int64 __fastcall sys_dcache_flush()\n{\n  return _sys_dcache_flush();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB64C",
+      "name": "_sys_icache_invalidate",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x5E28 (sub_5DC8)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\n__int64 __fastcall sys_icache_invalidate()\n{\n  return _sys_icache_invalidate();\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB658",
+      "name": "_sysctl",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x78A8 (sub_7720)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl sysctl(int *a1, u_int a2, void *a3, size_t *a4, void *a5, size_t a6)\n{\n  return _sysctl(a1, a2, a3, a4, a5, a6);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB664",
+      "name": "_sysctlbyname",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6A88 (_process)",
+        "0x6ADC (_process)",
+        "0x9C2C (sub_9B60)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl sysctlbyname(const char *a1, void *a2, size_t *a3, void *a4, size_t a5)\n{\n  return _sysctlbyname(a1, a2, a3, a4, a5);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB670",
+      "name": "_task_info",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x634C (sub_5FEC)",
+        "0x6388 (sub_5FEC)",
+        "0x775C (sub_7720)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl task_info(\n        task_name_t target_task,\n        task_flavor_t flavor,\n        task_info_t task_info_out,\n        mach_msg_type_number_t *task_info_outCnt)\n{\n  return _task_info(target_task, flavor, task_info_out, task_info_outCnt);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB67C",
+      "name": "_thread_switch",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9900 (sub_987C)",
+        "0x9984 (sub_987C)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl thread_switch(mach_port_name_t thread_name, int option, mach_msg_timeout_t option_time)\n{\n  return _thread_switch(thread_name, option, option_time);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB688",
+      "name": "_uname",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9D54 (sub_9CB8)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl uname(utsname *a1)\n{\n  return _uname(a1);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB694",
+      "name": "_vm_allocate",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6838 (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl vm_allocate(vm_map_t target_task, vm_address_t *address, vm_size_t size, int flags)\n{\n  return _vm_allocate(target_task, address, size, flags);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB6A0",
+      "name": "_vm_protect",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x6880 (sub_5FEC)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl vm_protect(\n        vm_map_t target_task,\n        vm_address_t address,\n        vm_size_t size,\n        boolean_t set_maximum,\n        vm_prot_t new_protection)\n{\n  return _vm_protect(target_task, address, size, set_maximum, new_protection);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB6AC",
+      "name": "_vm_region_64",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x8390 (sub_8298)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nkern_return_t __cdecl vm_region_64(\n        vm_map_t target_task,\n        vm_address_t *address,\n        vm_size_t *size,\n        vm_region_flavor_t flavor,\n        vm_region_info_t info,\n        mach_msg_type_number_t *infoCnt,\n        mach_port_t *object_name)\n{\n  return _vm_region_64(target_task, address, size, flavor, info, infoCnt, object_name);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xB6B8",
+      "name": "_vsnprintf",
+      "size": 12,
+      "calls": [],
+      "called_by": [
+        "0x9A88 (sub_9A34)",
+        "0x9AC4 (sub_9A34)"
+      ],
+      "string_refs": [],
+      "pseudocode": "// attributes: thunk\nint __cdecl vsnprintf(char *__str, size_t __size, const char *__format, va_list a4)\n{\n  return _vsnprintf(__str, __size, __format, a4);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xBB20",
+      "name": "_objc_msgSend$beginBackgroundTaskWithExpirationHandler:",
+      "size": 20,
+      "calls": [],
+      "called_by": [
+        "0x6DD4 (sub_6C44)"
+      ],
+      "string_refs": [
+        "beginBackgroundTaskWithExpirationHandler:"
+      ],
+      "pseudocode": "id objc_msgSend_beginBackgroundTaskWithExpirationHandler_(void *a1, const char *a2, ...)\n{\n  return objc_msgSend(a1, \"beginBackgroundTaskWithExpirationHandler:\");\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xBB34",
+      "name": "sub_BB34",
+      "size": 4,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void __noreturn sub_BB34()\n{\n  __break(1u);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xBB38",
+      "name": "sub_BB38",
+      "size": 4,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void __noreturn sub_BB38()\n{\n  __break(1u);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xBB3C",
+      "name": "sub_BB3C",
+      "size": 4,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void __noreturn sub_BB3C()\n{\n  __break(1u);\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xBB40",
+      "name": "_objc_msgSend$endBackgroundTask:",
+      "size": 20,
+      "calls": [],
+      "called_by": [
+        "0x6E20 (sub_6C44)",
+        "0x6EE4 (sub_6EC4)"
+      ],
+      "string_refs": [
+        "endBackgroundTask:"
+      ],
+      "pseudocode": "id objc_msgSend_endBackgroundTask_(void *a1, const char *a2, ...)\n{\n  return objc_msgSend(a1, \"endBackgroundTask:\");\n}",
+      "status": "ok"
+    },
+    {
+      "address": "0xBB54",
+      "name": "sub_BB54",
+      "size": 4,
+      "calls": [],
+      "called_by": [],
+      "string_refs": [],
+      "pseudocode": "void __noreturn sub_BB54()\n{\n  __break(1u);\n  JUMPOUT(0xBB58);\n}",
+      "status": "ok"
+    }
+  ]
+}
