@@ -70,13 +70,83 @@ Loaders (KRfmo6 / yAerzw / Fq2t1Q / YGPUu7)
 | `final_payload_B_*.js` | Final exploit payload B — launched when `PtqWRQ=false`. |
 | `urls.txt` | Maps local filenames to remote URLs on `b27[.]icu` with build hashes. |
 
+### Binary files
+
+| File | Type | Size | Description |
+|------|------|------|-------------|
+| `*_blob0.bin` | JavaScript | 28K / 47K | Embedded JS payloads (different between A and B). Deobfuscated as `*_blob0.js`. |
+| `*_blob1.bin` | ARM64 shellcode | 31K | ARM64 machine code — identical to `*_shellcode.bin`. Shared by A and B. |
+| `*_blob2.bin` | Encoded data | 30K | 16-bit wide-encoded Mach-O metadata. Contains segment names, library paths, HTTP strings. Shared by A and B. |
+| `*_macho.bin` | Mach-O ARM64 | 89K | Dynamic library (`MH_DYLIB`). Links `libcompression`, `libobjc`, `UIKit`, `CoreFoundation`, `CFNetwork`, `libSystem`. Shared by A and B. |
+| `*_shellcode.bin` | ARM64 shellcode | 31K | Identical to `*_blob1.bin`. Contains `dlopen`/`dlsym`, Mach-O segment scanning, `pthread_create`, `JSEvaluateScript`, syscall wrappers. |
+| `*_macho_v2.bin` | Mach-O ARM64 | 90K | Page-aligned variant of the Mach-O (A only). |
+
+### Analysis outputs
+
+| File | Content |
+|------|---------|
+| `final_payload_A_16434916_blob0.js` | Deobfuscated JS from blob0 (payload A) |
+| `final_payload_B_6241388a_blob0.js` | Deobfuscated JS from blob0 (payload B) |
+| `final_payload_A_16434916_macho_parsed.txt` | Full Mach-O header/segment/dylib analysis |
+| `shellcode_analysis.txt` | ARM64 instruction statistics, syscall locations, embedded strings |
+| `blob2_analysis.txt` | 16-bit encoded data analysis with extracted strings |
+
 ### Tooling
 
 | File | Description |
 |------|-------------|
 | `deobfuscate.js` | Full deobfuscation pipeline (Node.js). Run `node deobfuscate.js` to regenerate all deobfuscated files. Requires `js-beautify`. |
 | `decode-xor.js` | Standalone XOR string decoder. Prints decoded strings or creates `.decoded.js` files with `--replace`. |
+| `analyze-bins.js` | Binary file analyzer — deobfuscates blob0 JS, parses Mach-O headers, extracts shellcode strings, analyzes blob2 encoding. |
 | `DECODE.md` | Detailed guide to the obfuscation techniques and how to use the decoding tools. |
+
+---
+
+## Binary Analysis
+
+### Mach-O Dynamic Library
+
+All `*_macho.bin` variants are the **same ARM64 `MH_DYLIB`** (shared between payload A and B):
+
+- **CPU**: ARM64 (ALL) — not ARM64e, no PAC
+- **Segments**: `__TEXT` (49K), `__DATA_CONST` (16K), `__DATA` (16K), `__LINKEDIT` (7K)
+- **Notable sections**: `__x` (472 bytes — custom code cave), `__internal` (0 bytes — marker section), `__cstring` (708 bytes)
+- **Linked frameworks**: `UIKit`, `CoreFoundation`, `SystemConfiguration`, `CFNetwork`
+- **Linked libraries**: `libcompression`, `libobjc.A`, `libSystem.B`
+
+Key strings from `__cstring` reveal C2 communication and system fingerprinting:
+
+```
+/usr/libexec/corelliumd        — Corellium VM detection
+ProductVersion                 — device fingerprinting
+IOPlatformSerialNumber         — hardware ID extraction
+MobileStore/1.0                — HTTP User-Agent
+application/json               — content type for C2
+{"e":%u,"l":%u}               — C2 beacon format
+{"cmd":"logmsg","args":...}   — C2 logging protocol
+```
+
+### ARM64 Shellcode (31K)
+
+Position-independent code with **100 functions** (RET instructions). No direct syscalls (`SVC`) — all system calls go through resolved function pointers. Key embedded strings:
+
+| String | Purpose |
+|--------|---------|
+| `dlopen`, `dlsym`, `dlclose` | Runtime dynamic loading |
+| `/usr/lib/system/libdyld.dylib` | dyld resolution |
+| `__dyld_dlsym_internal` | Private dyld API |
+| `JSEvaluateScript` | JavaScriptCore eval |
+| `pthread_create` | Thread creation |
+| `vm_protect`, `vm_map`, `vm_allocate` | Mach VM manipulation |
+| `mach_make_memory_entry` | Memory entry creation |
+| `proc_pidinfo`, `getpid` | Process inspection |
+| `sigaction` | Signal handling |
+| `_objc_flush_caches` | ObjC runtime manipulation |
+| `_NSGetArgc`, `_NSGetArgv` | Process argument access |
+
+### blob2 — Encoded Mach-O Metadata
+
+A 16-bit wide format encoding Mach-O structural data. Each value is stored as a `uint16le`. Contains recognizable strings: segment names (`__TEXT`, `__DATA_CONST`, `__LINKEDIT`), library paths (`/usr/lib/...`, `UIKit`), HTTP-related strings (`http`, `WebContent`, `Product`), and Objective-C class references (`LASS_$_`, `_SANDBOX`).
 
 ---
 

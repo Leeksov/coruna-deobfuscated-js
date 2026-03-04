@@ -1,0 +1,75 @@
+Mach-O Analysis: final_payload_A_16434916_macho.bin
+============================================================
+Size: 89327 bytes
+Type: MH_DYLIB
+CPU: ARM64 (subtype: ALL)
+Flags: 0x100085
+Load commands: 21
+
+Segments:
+  __TEXT
+    vmAddr: 0x0  vmSize: 0xc000
+    fileOff: 0  fileSize: 49152
+    maxProt: 5  initProt: 5  nSections: 10
+      [__text] addr=0x5cec size=21436 fileOff=23788
+      [__x] addr=0xb0a8 size=472 fileOff=45224
+      [__stubs] addr=0xb280 size=1092 fileOff=45696
+      [__stub_helper] addr=0xb6c4 size=1116 fileOff=46788
+      [__objc_stubs] addr=0xbb20 size=64 fileOff=47904
+      [__const] addr=0xbb60 size=48 fileOff=47968
+      [__cstring] addr=0xbb90 size=708 fileOff=48016
+      [__objc_methname] addr=0xbe54 size=62 fileOff=48724
+      [__unwind_info] addr=0xbe94 size=280 fileOff=48788
+      [__eh_frame] addr=0xbfb0 size=52 fileOff=49072
+  __DATA_CONST
+    vmAddr: 0xc000  vmSize: 0x4000
+    fileOff: 49152  fileSize: 16384
+    maxProt: 3  initProt: 3  nSections: 3
+      [__got] addr=0xc000 size=144 fileOff=49152
+      [__const] addr=0xc090 size=48 fileOff=49296
+      [__objc_imageinfo] addr=0xc0c0 size=8 fileOff=49344
+  __DATA
+    vmAddr: 0x10000  vmSize: 0x4000
+    fileOff: 65536  fileSize: 16384
+    maxProt: 3  initProt: 3  nSections: 5
+      [__la_symbol_ptr] addr=0x10000 size=728 fileOff=65536
+      [__objc_selrefs] addr=0x102d8 size=16 fileOff=66264
+      [__objc_classrefs] addr=0x102e8 size=8 fileOff=66280
+      [__internal] addr=0x102f0 size=0 fileOff=66288
+      [__data] addr=0x102f0 size=8 fileOff=66288
+  __LINKEDIT
+    vmAddr: 0x14000  vmSize: 0x1cf0
+    fileOff: 81920  fileSize: 7408
+    maxProt: 1  initProt: 1  nSections: 0
+
+Linked dylibs:
+  /usr/lib/libcompression.dylib
+  /usr/lib/libobjc.A.dylib
+  /System/Library/Frameworks/UIKit.framework/UIKit
+  /System/Library/Frameworks/CoreFoundation.framework/CoreFoundation
+  /System/Library/Frameworks/SystemConfiguration.framework/SystemConfiguration
+  /System/Library/Frameworks/CFNetwork.framework/CFNetwork
+  /usr/lib/libSystem.B.dylib
+
+Load commands:
+  LC_SEGMENT_64 (872 bytes)
+  LC_SEGMENT_64 (312 bytes)
+  LC_SEGMENT_64 (472 bytes)
+  LC_SEGMENT_64 (72 bytes)
+  LC_ID_DYLIB (32 bytes)
+  LC_DYLD_INFO_ONLY (48 bytes)
+  LC_SYMTAB (24 bytes)
+  LC_DYSYMTAB (80 bytes)
+  LC_IDENT (24 bytes)
+  LC_BUILD_VERSION (32 bytes)
+  LC_SOURCE_VERSION (16 bytes)
+  0x2c (24 bytes)
+  LC_LOAD_DYLIB (56 bytes)
+  LC_LOAD_DYLIB (56 bytes)
+  LC_LOAD_DYLIB (80 bytes)
+  LC_LOAD_DYLIB (96 bytes)
+  LC_LOAD_DYLIB (104 bytes)
+  LC_LOAD_DYLIB (88 bytes)
+  LC_LOAD_DYLIB (56 bytes)
+  LC_FUNCTION_STARTS (16 bytes)
+  LC_DATA_IN_CODE (16 bytes)
